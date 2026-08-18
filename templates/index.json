@@ -36,6 +36,27 @@
             "padding-inline-end": 48
           },
           "blocks": {
+            "menu_JemHte": {
+              "type": "menu",
+              "name": "t:names.menu",
+              "settings": {
+                "menu": "main-menu",
+                "heading": "",
+                "menu_spacing": 12,
+                "show_as_accordion": false,
+                "accordion_icon": "caret",
+                "accordion_dividers": false,
+                "background_color": "",
+                "text_color": "",
+                "heading_preset": "h3",
+                "link_preset": "paragraph",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_ph4WDx": {
               "type": "text",
               "name": "t:names.heading",
@@ -108,6 +129,7 @@
             }
           },
           "block_order": [
+            "menu_JemHte",
             "text_ph4WDx",
             "text_wpa3ni",
             "button_ccRq7L"

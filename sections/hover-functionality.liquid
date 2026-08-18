@@ -316,6 +316,7 @@
     display: grid;
     place-items: center;
     min-width: 0;
+    aspect-ratio: 3 / 4;
     min-height: var(--hf-card-height);
     margin: 0;
     padding: 1.25rem;
@@ -595,6 +596,7 @@
     }
 
     #HoverFunctionality-{{ section.id }} .hover-functionality__card {
+      aspect-ratio: 3 / 4;
       min-height: var(--hf-card-mobile-height);
       padding: 1rem;
     }
@@ -922,7 +924,7 @@
       "max": 420,
       "step": 10,
       "unit": "px",
-      "default": 220
+      "default": 360
     },
     {
       "type": "range",
@@ -932,7 +934,7 @@
       "max": 380,
       "step": 10,
       "unit": "px",
-      "default": 220
+      "default": 300
     },
     {
       "type": "range",

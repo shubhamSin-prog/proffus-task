@@ -143,7 +143,8 @@
           <span class="hover-functionality__card-wash" aria-hidden="true"></span>
           <span class="hover-functionality__plus" aria-hidden="true">
             <svg viewBox="0 0 24 24" focusable="false">
-              <path d="M12 5v14M5 12h14" />
+              <path class="hover-functionality__icon-line hover-functionality__icon-line--horizontal" d="M5 12h14" />
+              <path class="hover-functionality__icon-line hover-functionality__icon-line--vertical" d="M12 5v14" />
             </svg>
           </span>
 
@@ -299,7 +300,7 @@
     display: grid;
     grid-template-columns: repeat(var(--hf-desktop-columns), minmax(0, 1fr));
     gap: var(--hf-card-gap);
-    width: min(100%, 51.8rem);
+    width: min(100%, var(--hf-max-width));
     margin: 0 auto;
   }
 
@@ -448,18 +449,26 @@
     height: 1rem;
   }
 
-  #HoverFunctionality-{{ section.id }} .hover-functionality__plus path {
+  #HoverFunctionality-{{ section.id }} .hover-functionality__icon-line {
     fill: none;
     stroke: currentcolor;
     stroke-width: 2;
     stroke-linecap: round;
+    transform-origin: center;
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
   }
 
   #HoverFunctionality-{{ section.id }} .hover-functionality__card:hover .hover-functionality__plus,
   #HoverFunctionality-{{ section.id }} .hover-functionality__card:focus-visible .hover-functionality__plus,
   #HoverFunctionality-{{ section.id }} .hover-functionality__card.is-active .hover-functionality__plus {
     opacity: 1;
-    transform: scale(1) rotate(90deg);
+    transform: scale(1);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card.is-active .hover-functionality__plus {
+    transform: scale(1) rotate(45deg);
   }
 
   #HoverFunctionality-{{ section.id }} .hover-functionality__copy {
@@ -682,7 +691,7 @@
       "id": "max_width",
       "label": "Section content width",
       "min": 720,
-      "max": 1400,
+      "max": 2400,
       "step": 20,
       "unit": "px",
       "default": 1060

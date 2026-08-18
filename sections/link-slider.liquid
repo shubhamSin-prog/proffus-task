@@ -16,7 +16,7 @@
 ></div>
 
 <div
-  class="link-slider-section section section--{{ section.settings.section_width }} spacing-style{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+  class="link-slider-section section section--{{ section.settings.section_width }} spacing-style disable-section-top-offset{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
   style="
     {% render 'spacing-padding', settings: section.settings %}
     --link-slider-content-align: {{ section.settings.content_alignment }};
@@ -37,16 +37,17 @@
         endif
 
         assign heading = block.settings.heading | default: block.settings.link_label
+        assign slide_link = block.settings.image_link | default: block.settings.link
       %}
 
       {% capture slide %}
         <a
           class="link-slider__link"
-          {% if block.settings.link == blank %}
+          {% if slide_link == blank %}
             role="link"
             aria-disabled="true"
           {% else %}
-            href="{{ block.settings.link }}"
+            href="{{ slide_link }}"
           {% endif %}
           {% if block.settings.open_in_new_tab %}
             target="_blank"
@@ -396,6 +397,11 @@
           "label": "Image"
         },
         {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image link"
+        },
+        {
           "type": "text",
           "id": "eyebrow",
           "label": "Eyebrow"
@@ -418,11 +424,6 @@
           "default": "Shop now"
         },
         {
-          "type": "url",
-          "id": "link",
-          "label": "Link"
-        },
-        {
           "type": "checkbox",
           "id": "open_in_new_tab",
           "label": "Open in new tab",
@@ -443,7 +444,7 @@
             "heading": "Browse our latest products",
             "text": "Fresh styles are ready to explore.",
             "link_label": "Shop all",
-            "link": "shopify://collections/all"
+            "image_link": "shopify://collections/all"
           }
         },
         "slide_2": {
@@ -453,7 +454,7 @@
             "heading": "Explore curated picks",
             "text": "Find the pieces customers are loving right now.",
             "link_label": "View collection",
-            "link": "shopify://collections/all"
+            "image_link": "shopify://collections/all"
           }
         }
       },

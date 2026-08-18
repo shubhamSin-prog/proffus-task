@@ -9,18 +9,30 @@
  */
 {
   "sections": {
+<<<<<<< Updated upstream
     "link_slider_NwzGyW": {
+=======
+    "link_slider_top": {
+>>>>>>> Stashed changes
       "type": "link-slider",
       "blocks": {
         "slide_k7Vf6y": {
           "type": "slide",
           "settings": {
+<<<<<<< Updated upstream
             "image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
             "eyebrow": "New arrivals",
             "heading": "Browse our latest products",
             "text": "Fresh styles are ready to explore.",
             "link_label": "",
             "link": "shopify://collections/best-seller",
+=======
+            "eyebrow": "New arrivals",
+            "heading": "Browse our latest products",
+            "text": "Fresh styles are ready to explore.",
+            "link_label": "Shop all",
+            "image_link": "shopify://collections/all",
+>>>>>>> Stashed changes
             "open_in_new_tab": false
           }
         },
@@ -31,8 +43,13 @@
             "eyebrow": "Featured",
             "heading": "Explore curated picks",
             "text": "Find the pieces customers are loving right now.",
+<<<<<<< Updated upstream
             "link_label": "",
             "link": "shopify://collections/all",
+=======
+            "link_label": "View collection",
+            "image_link": "shopify://collections/all",
+>>>>>>> Stashed changes
             "open_in_new_tab": false
           }
         }
@@ -48,9 +65,15 @@
         "content_alignment": "flex-start",
         "text_alignment": "left",
         "autoplay": true,
+<<<<<<< Updated upstream
         "autoplay_speed": 3,
         "overlay_opacity": 40,
         "background_color": "",
+=======
+        "autoplay_speed": 4,
+        "overlay_opacity": 40,
+        "background_color": "rgba(0,0,0,0)",
+>>>>>>> Stashed changes
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -201,8 +224,13 @@
     }
   },
   "order": [
+<<<<<<< Updated upstream
     "link_slider_NwzGyW",
     "perfect_white_shirt_X8qByh",
     "hover_functionality_V34UeT"
+=======
+    "link_slider_top",
+    "product_list_fa6P9H"
+>>>>>>> Stashed changes
   ]
 }

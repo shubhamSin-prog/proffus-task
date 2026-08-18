@@ -55,34 +55,28 @@
         "padding-block-end": 0
       }
     },
-    "perfect_white_shirt_X8qByh": {
+    "perfect_white_shirt_AiPHN9": {
       "type": "perfect-white-shirt",
       "blocks": {
-        "feature_not_see_through": {
+        "feature_UzPr6H": {
           "type": "feature",
           "settings": {
-            "image": "",
-            "mobile_image": "",
             "image_alt": "",
             "title": "Not see-through",
             "text": "<p>We worked hard on choosing a fabric that's breathable but also completely opaque. No nude bras needed.</p>"
           }
         },
-        "feature_no_gaping": {
+        "feature_mXt8Nj": {
           "type": "feature",
           "settings": {
-            "image": "",
-            "mobile_image": "",
             "image_alt": "",
             "title": "No gaping at the chest",
             "text": "<p>No more using safety pins or fashion tape to prevent gaping at the chest. We've added hidden buttons to prevent gaping.</p>"
           }
         },
-        "feature_breathable": {
+        "feature_dEcGCe": {
           "type": "feature",
           "settings": {
-            "image": "",
-            "mobile_image": "",
             "image_alt": "",
             "title": "Light & Breathable",
             "text": "<p>Now you don't have to worry about wearing heavy shirts, our shirt offers a perfect blend of cotton and Lycra that keeps you comfortable.</p>"
@@ -90,14 +84,14 @@
         }
       },
       "block_order": [
-        "feature_not_see_through",
-        "feature_no_gaping",
-        "feature_breathable"
+        "feature_UzPr6H",
+        "feature_mXt8Nj",
+        "feature_dEcGCe"
       ],
       "name": "Perfect white shirt",
       "settings": {
         "heading": "Why this is the perfect white shirt",
-        "max_width": 1060,
+        "max_width": 1400,
         "desktop_columns": "3",
         "mobile_columns": "1",
         "background_color": "#eeeeee",
@@ -127,6 +121,6 @@
   },
   "order": [
     "link_slider_NwzGyW",
-    "perfect_white_shirt_X8qByh"
+    "perfect_white_shirt_AiPHN9"
   ]
 }

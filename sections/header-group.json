@@ -125,74 +125,10 @@
         "collection_inverse_logo": false,
         "text_color_transparent_collection": ""
       }
-    },
-    "perfect_white_shirt_cYarax": {
-      "type": "perfect-white-shirt",
-      "blocks": {
-        "feature_RL7E6z": {
-          "type": "feature",
-          "settings": {
-            "image_alt": "",
-            "title": "Not see-through",
-            "text": "<p>We worked hard on choosing a fabric that's breathable but also completely opaque. No nude bras needed.</p>"
-          }
-        },
-        "feature_KMHWfY": {
-          "type": "feature",
-          "settings": {
-            "image_alt": "",
-            "title": "No gaping at the chest",
-            "text": "<p>No more using safety pins or fashion tape to prevent gaping at the chest. We've added hidden buttons to prevent gaping.</p>"
-          }
-        },
-        "feature_YUp6qn": {
-          "type": "feature",
-          "settings": {
-            "image_alt": "",
-            "title": "Light & Breathable",
-            "text": "<p>Now you don't have to worry about wearing heavy shirts, our shirt offers a perfect blend of cotton and Lycra that keeps you comfortable.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "feature_RL7E6z",
-        "feature_KMHWfY",
-        "feature_YUp6qn"
-      ],
-      "name": "Perfect white shirt",
-      "settings": {
-        "heading": "Why this is the perfect white shirt",
-        "max_width": 1060,
-        "desktop_columns": "3",
-        "mobile_columns": "1",
-        "background_color": "#eeeeee",
-        "card_background": "#f6f6f6",
-        "text_color": "#111111",
-        "body_color": "#333333",
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "padding_inline": 32,
-        "mobile_padding_inline": 16,
-        "heading_bottom_spacing": 26,
-        "grid_gap": 8,
-        "card_padding": 20,
-        "content_gap": 18,
-        "heading_size": 34,
-        "heading_mobile_size": 28,
-        "title_size": 13,
-        "body_size": 12,
-        "image_width": 86,
-        "image_mobile_width": 86,
-        "image_height": 250,
-        "image_mobile_height": 300,
-        "image_radius": 0,
-        "card_radius": 0
-      }
     }
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section",
-    "perfect_white_shirt_cYarax"
+    "header_section"
   ]
 }

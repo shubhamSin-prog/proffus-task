@@ -48,7 +48,7 @@
         "content_alignment": "flex-start",
         "text_alignment": "left",
         "autoplay": true,
-        "autoplay_speed": 4,
+        "autoplay_speed": 3,
         "overlay_opacity": 40,
         "background_color": "",
         "padding-block-start": 0,

@@ -100,6 +100,20 @@
   {% endcapture %}
 
   {% if slide_count > 0 %}
+    {% capture controls %}
+      {% if section.settings.show_pagination and slide_count > 1 %}
+        {% render 'slideshow-controls',
+          style: section.settings.pagination_style,
+          item_count: slide_count,
+          show_arrows: false,
+          controls_on_media: true,
+          pagination_position: 'center',
+          icon_style: 'chevron',
+          shape: 'circle'
+        %}
+      {% endif %}
+    {% endcapture %}
+
     {% render 'slideshow',
       class: 'link-slider',
       slides: slides,
@@ -107,7 +121,7 @@
       slide_size: section.settings.slide_height,
       slide_position: 'stretch',
       show_arrows: false,
-      controls: '',
+      controls: controls,
       autoplay: autoplay,
       autoplay_speed: section.settings.autoplay_speed
     %}
@@ -121,6 +135,45 @@
 
   .link-slider slideshow-container {
     background: transparent;
+  }
+
+  .link-slider slideshow-controls[controls-on-media] {
+    bottom: clamp(1rem, 3vw, 2rem);
+    width: 100%;
+    min-height: 0;
+    padding-inline: var(--link-slider-min-padding);
+    mix-blend-mode: normal;
+    pointer-events: none;
+  }
+
+  .link-slider slideshow-controls .slideshow-controls__dots,
+  .link-slider slideshow-controls .slideshow-controls__counter {
+    min-height: 2.5rem;
+    border: 1px solid rgb(255 255 255 / 0.24);
+    background: rgb(0 0 0 / 0.3);
+    box-shadow: 0 0.6rem 1.6rem rgb(0 0 0 / 0.18);
+    backdrop-filter: blur(0.7rem);
+    pointer-events: auto;
+  }
+
+  .link-slider slideshow-controls .slideshow-controls__dots {
+    gap: 0.55rem;
+    padding: 0.7rem 0.95rem;
+  }
+
+  .link-slider slideshow-controls .slideshow-controls__dots button::after {
+    background-color: rgb(255 255 255 / 0.58);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12);
+  }
+
+  .link-slider slideshow-controls .slideshow-controls__dots button[aria-selected='true']::after {
+    background-color: #ffffff;
+    box-shadow: 0 0 0 0.18rem rgb(255 255 255 / 0.24);
+  }
+
+  .link-slider slideshow-controls .slideshow-controls__counter {
+    color: #ffffff;
+    padding: 0.65rem 1rem;
   }
 
   .link-slider slideshow-slides {
@@ -344,6 +397,29 @@
       "unit": "s",
       "default": 4,
       "visible_if": "{{ section.settings.autoplay }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show pagination",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "pagination_style",
+      "label": "Pagination style",
+      "options": [
+        {
+          "value": "dots",
+          "label": "Dots"
+        },
+        {
+          "value": "counter",
+          "label": "Counter"
+        }
+      ],
+      "default": "dots",
+      "visible_if": "{{ section.settings.show_pagination }}"
     },
     {
       "type": "range",

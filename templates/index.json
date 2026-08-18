@@ -49,6 +49,8 @@
         "text_alignment": "left",
         "autoplay": true,
         "autoplay_speed": 3,
+        "show_pagination": true,
+        "pagination_style": "dots",
         "overlay_opacity": 5,
         "background_color": "",
         "padding-block-start": 0,

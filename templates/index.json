@@ -61,6 +61,7 @@
         "feature_UzPr6H": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/create-a-image-og-1500x1000-white-shirt-female-formal.png",
             "image_alt": "",
             "title": "Not see-through",
             "text": "<p>We worked hard on choosing a fabric that's breathable but also completely opaque. No nude bras needed.</p>"
@@ -69,6 +70,7 @@
         "feature_mXt8Nj": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/with-female-model.png",
             "image_alt": "",
             "title": "No gaping at the chest",
             "text": "<p>No more using safety pins or fashion tape to prevent gaping at the chest. We've added hidden buttons to prevent gaping.</p>"
@@ -77,6 +79,7 @@
         "feature_dEcGCe": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/generate-blue-female-model-shirt-1500-1000.png",
             "image_alt": "",
             "title": "Light & Breathable",
             "text": "<p>Now you don't have to worry about wearing heavy shirts, our shirt offers a perfect blend of cotton and Lycra that keeps you comfortable.</p>"

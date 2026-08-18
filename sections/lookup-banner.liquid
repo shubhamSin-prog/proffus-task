@@ -1,3 +1,7 @@
+{% comment %}
+  Shoppable lookup banner with an interaction-triggered product popup.
+{% endcomment %}
+
 {% liquid
   assign selected_product = section.settings.product
   assign selected_variant = selected_product.selected_or_first_available_variant

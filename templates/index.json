@@ -19,7 +19,7 @@
             "heading": "Browse our latest products",
             "text": "Fresh styles are ready to explore.",
             "link_label": "",
-            "link": "shopify://collections/all",
+            "link": "shopify://collections/best-seller",
             "open_in_new_tab": false
           }
         },
@@ -29,7 +29,7 @@
             "eyebrow": "Featured",
             "heading": "Explore curated picks",
             "text": "Find the pieces customers are loving right now.",
-            "link_label": "View collection",
+            "link_label": "",
             "link": "shopify://collections/all",
             "open_in_new_tab": false
           }

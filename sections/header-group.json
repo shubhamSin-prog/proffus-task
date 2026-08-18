@@ -18,10 +18,13 @@
           "type": "_announcement",
           "settings": {
             "text": "Welcome to our store",
+            "link": "",
             "font": "var(--font-subheading--family)",
             "font_size": "0.75rem",
+            "weight": "",
             "letter_spacing": "normal",
-            "case": "none"
+            "case": "none",
+            "text_color": ""
           },
           "blocks": {}
         }
@@ -58,6 +61,8 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
+            "background_color": "{{ settings.color_palette.background }}",
+            "text_color": "",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "body",
@@ -67,6 +72,8 @@
             "featured_collections_aspect_ratio": "16 / 9",
             "image_border_radius": 0,
             "navigation_bar": false,
+            "background_color_navigation_bar": "{{ settings.color_palette.background }}",
+            "text_color_navigation_bar": "",
             "drawer_accordion": false,
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false
@@ -78,6 +85,7 @@
         "logo_position": "left",
         "menu_position": "left",
         "menu_row": "top",
+        "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
@@ -93,16 +101,98 @@
         "enable_sticky_header": "always",
         "divider_width": 0,
         "divider_size": "page-width",
+        "divider_color": "",
         "border_width": 0,
+        "bottom_border_color": "",
+        "actions_display_style": "icon",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "none",
         "background_color_top": "{{ settings.color_palette.background }}",
+        "text_color_top": "",
+        "background_color_bottom": "",
+        "text_color_bottom": "",
+        "bubble_style": "default",
+        "bubble_background_color": "",
+        "bubble_text_color": "",
         "enable_transparent_header_home": false,
+        "home_inverse_logo": false,
+        "text_color_transparent_home": "",
         "enable_transparent_header_product": false,
-        "enable_transparent_header_collection": false
+        "product_inverse_logo": false,
+        "text_color_transparent_product": "",
+        "enable_transparent_header_collection": false,
+        "collection_inverse_logo": false,
+        "text_color_transparent_collection": ""
+      }
+    },
+    "perfect_white_shirt_cYarax": {
+      "type": "perfect-white-shirt",
+      "blocks": {
+        "feature_RL7E6z": {
+          "type": "feature",
+          "settings": {
+            "image_alt": "",
+            "title": "Not see-through",
+            "text": "<p>We worked hard on choosing a fabric that's breathable but also completely opaque. No nude bras needed.</p>"
+          }
+        },
+        "feature_KMHWfY": {
+          "type": "feature",
+          "settings": {
+            "image_alt": "",
+            "title": "No gaping at the chest",
+            "text": "<p>No more using safety pins or fashion tape to prevent gaping at the chest. We've added hidden buttons to prevent gaping.</p>"
+          }
+        },
+        "feature_YUp6qn": {
+          "type": "feature",
+          "settings": {
+            "image_alt": "",
+            "title": "Light & Breathable",
+            "text": "<p>Now you don't have to worry about wearing heavy shirts, our shirt offers a perfect blend of cotton and Lycra that keeps you comfortable.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "feature_RL7E6z",
+        "feature_KMHWfY",
+        "feature_YUp6qn"
+      ],
+      "name": "Perfect white shirt",
+      "settings": {
+        "heading": "Why this is the perfect white shirt",
+        "max_width": 1060,
+        "desktop_columns": "3",
+        "mobile_columns": "1",
+        "background_color": "#eeeeee",
+        "card_background": "#f6f6f6",
+        "text_color": "#111111",
+        "body_color": "#333333",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_inline": 32,
+        "mobile_padding_inline": 16,
+        "heading_bottom_spacing": 26,
+        "grid_gap": 8,
+        "card_padding": 20,
+        "content_gap": 18,
+        "heading_size": 34,
+        "heading_mobile_size": 28,
+        "title_size": 13,
+        "body_size": 12,
+        "image_width": 86,
+        "image_mobile_width": 86,
+        "image_height": 250,
+        "image_mobile_height": 300,
+        "image_radius": 0,
+        "card_radius": 0
       }
     }
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section"
+    "header_section",
+    "perfect_white_shirt_cYarax"
   ]
 }

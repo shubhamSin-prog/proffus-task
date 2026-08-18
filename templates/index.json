@@ -175,7 +175,7 @@
         "max_width": 1400,
         "content_width": 700,
         "desktop_columns": "4",
-        "mobile_columns": "1",
+        "mobile_columns": "2",
         "active_card_index": 4,
         "background_color": "#76A6ED",
         "text_color": "#FFFFFF",

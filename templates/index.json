@@ -138,7 +138,7 @@
         "feature_baTJUe": {
           "type": "feature",
           "settings": {
-            "image": "shopify://shop_images/create-1000-1000-white-shirt-image-with-femal.png",
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_19_2026_12_29_52_AM_4.png",
             "image_alt": "",
             "title": "Clean & Safe",
             "hover_text": "Gentle ingredients selected with everyday skin in mind."
@@ -147,7 +147,7 @@
         "feature_Lr47UU": {
           "type": "feature",
           "settings": {
-            "image": "shopify://shop_images/generate-a-image-with-female-1500x1500.png",
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_19_2026_12_29_50_AM_2.png",
             "image_alt": "",
             "title": "Sustainably Made",
             "hover_text": "Considered choices from formula to finish."
@@ -156,7 +156,7 @@
         "feature_gXMCr3": {
           "type": "feature",
           "settings": {
-            "image": "shopify://shop_images/generate-a-women-1500-1500-model.png",
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_19_2026_12_29_51_AM_3.png",
             "image_alt": "",
             "title": "Cruelty Free",
             "hover_text": "Always tested on skin, never on animals."
@@ -195,7 +195,7 @@
         "text_size": 12,
         "card_title_size": 13,
         "card_text_size": 12,
-        "card_height": 370,
+        "card_height": 320,
         "card_mobile_height": 200,
         "card_overlay_opacity": 70,
         "card_active_overlay_opacity": 75

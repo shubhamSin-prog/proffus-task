@@ -1,0 +1,1013 @@
+{% liquid
+  assign desktop_columns = section.settings.desktop_columns | default: 4
+  assign mobile_columns = section.settings.mobile_columns | default: 1
+  assign active_card_index = section.settings.active_card_index | default: 4
+%}
+
+<section
+  id="HoverFunctionality-{{ section.id }}"
+  class="hover-functionality"
+  style="
+    --hf-bg: {{ section.settings.background_color }};
+    --hf-text: {{ section.settings.text_color }};
+    --hf-body: {{ section.settings.body_color }};
+    --hf-card-text: {{ section.settings.card_text_color }};
+    --hf-card-active-text: {{ section.settings.card_active_text_color }};
+    --hf-max-width: {{ section.settings.max_width }}px;
+    --hf-content-width: {{ section.settings.content_width }}px;
+    --hf-padding-top: {{ section.settings.padding_top }}px;
+    --hf-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --hf-padding-inline: {{ section.settings.padding_inline }}px;
+    --hf-mobile-padding-inline: {{ section.settings.mobile_padding_inline }}px;
+    --hf-heading-size: {{ section.settings.heading_size }}px;
+    --hf-heading-mobile-size: {{ section.settings.heading_mobile_size }}px;
+    --hf-text-size: {{ section.settings.text_size }}px;
+    --hf-card-title-size: {{ section.settings.card_title_size }}px;
+    --hf-card-text-size: {{ section.settings.card_text_size }}px;
+    --hf-card-height: {{ section.settings.card_height }}px;
+    --hf-card-mobile-height: {{ section.settings.card_mobile_height }}px;
+    --hf-card-gap: {{ section.settings.card_gap }}px;
+    --hf-card-radius: {{ section.settings.card_radius }}px;
+    --hf-card-overlay-opacity: {{ section.settings.card_overlay_opacity | divided_by: 100.0 }};
+    --hf-card-active-opacity: {{ section.settings.card_active_overlay_opacity | divided_by: 100.0 }};
+    --hf-bg-image-opacity: {{ section.settings.background_image_opacity | divided_by: 100.0 }};
+    --hf-desktop-columns: {{ desktop_columns }};
+    --hf-mobile-columns: {{ mobile_columns }};
+  "
+>
+  {% if section.settings.background_image != blank %}
+    <div class="hover-functionality__background{% if section.settings.mobile_background_image != blank %} hover-functionality__background--desktop{% endif %}" aria-hidden="true">
+      {{
+        section.settings.background_image
+        | image_url: width: 2400
+        | image_tag:
+          widths: '750, 990, 1200, 1600, 2000, 2400',
+          sizes: '100vw',
+          loading: 'lazy',
+          class: 'hover-functionality__background-image',
+          alt: ''
+      }}
+    </div>
+  {% endif %}
+
+  {% if section.settings.mobile_background_image != blank %}
+    <div class="hover-functionality__background hover-functionality__background--mobile" aria-hidden="true">
+      {{
+        section.settings.mobile_background_image
+        | image_url: width: 1200
+        | image_tag:
+          widths: '360, 480, 640, 800, 1000, 1200',
+          sizes: '100vw',
+          loading: 'lazy',
+          class: 'hover-functionality__background-image',
+          alt: ''
+      }}
+    </div>
+  {% endif %}
+
+  <div class="hover-functionality__decor hover-functionality__decor--leaf" aria-hidden="true"></div>
+  <div class="hover-functionality__decor hover-functionality__decor--specks" aria-hidden="true"></div>
+
+  <div class="hover-functionality__inner">
+    <div class="hover-functionality__intro">
+      {% if section.settings.heading != blank %}
+        <h2 class="hover-functionality__heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="hover-functionality__text">
+          {{ section.settings.text }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="hover-functionality__cards" data-hover-feature-cards>
+      {% for block in section.blocks %}
+        {% liquid
+          assign card_is_active = false
+          assign loading = 'lazy'
+          assign fetch_priority = 'auto'
+          assign card_label = block.settings.title | default: block.settings.hover_text | default: 'Feature'
+
+          if forloop.index == active_card_index
+            assign card_is_active = true
+          endif
+
+          if forloop.first
+            assign loading = 'eager'
+            assign fetch_priority = 'high'
+          endif
+        %}
+
+        <button
+          type="button"
+          class="hover-functionality__card{% if card_is_active %} is-active{% endif %}{% if block.settings.hover_text != blank %} hover-functionality__card--has-hover-text{% endif %}"
+          aria-label="{{ card_label | escape }}"
+          aria-pressed="{% if card_is_active %}true{% else %}false{% endif %}"
+          data-hover-feature-card
+          data-default-active="{% if card_is_active %}true{% else %}false{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <span class="hover-functionality__card-media{% if block.settings.mobile_image != blank %} hover-functionality__card-media--has-mobile{% endif %}">
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 900
+                | image_tag:
+                  widths: '240, 320, 420, 520, 640, 760, 900',
+                  sizes: '(min-width: 990px) 22vw, (min-width: 750px) 42vw, 84vw',
+                  loading: loading,
+                  fetchpriority: fetch_priority,
+                  class: 'hover-functionality__card-image hover-functionality__card-image--desktop',
+                  alt: block.settings.image_alt
+              }}
+            {% else %}
+              <span class="hover-functionality__fallback hover-functionality__fallback--{{ forloop.index }}"></span>
+            {% endif %}
+
+            {% if block.settings.mobile_image != blank %}
+              {{
+                block.settings.mobile_image
+                | image_url: width: 760
+                | image_tag:
+                  widths: '240, 320, 420, 520, 640, 760',
+                  sizes: '84vw',
+                  loading: loading,
+                  fetchpriority: fetch_priority,
+                  class: 'hover-functionality__card-image hover-functionality__card-image--mobile',
+                  alt: block.settings.image_alt
+              }}
+            {% endif %}
+          </span>
+
+          <span class="hover-functionality__card-wash" aria-hidden="true"></span>
+          <span class="hover-functionality__plus" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </span>
+
+          <span class="hover-functionality__copy">
+            {% if block.settings.title != blank %}
+              <span class="hover-functionality__card-title">{{ block.settings.title | escape }}</span>
+            {% endif %}
+
+            {% if block.settings.hover_text != blank %}
+              <span class="hover-functionality__card-description">
+                {{ block.settings.hover_text | escape | newline_to_br }}
+              </span>
+            {% endif %}
+          </span>
+        </button>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #HoverFunctionality-{{ section.id }} {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: var(--hf-padding-top) var(--hf-padding-inline) var(--hf-padding-bottom);
+    color: var(--hf-text);
+    background:
+      radial-gradient(circle at 97% 12%, rgb(248 249 252 / 0.9) 0 3.8rem, transparent 3.9rem),
+      radial-gradient(circle at 8% 101%, rgb(248 249 252 / 0.84) 0 3.1rem, transparent 3.2rem),
+      radial-gradient(circle at 87% 91%, rgb(248 249 252 / 0.66) 0 4.4rem, transparent 4.5rem),
+      linear-gradient(130deg, #a8bfe1 0%, var(--hf-bg) 58%, #4a7fd9 100%);
+  }
+
+  #HoverFunctionality-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__background,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__decor {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__background {
+    inset: 0;
+    z-index: -3;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__background-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: var(--hf-bg-image-opacity);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__background--mobile {
+    display: none;
+  }
+
+  #HoverFunctionality-{{ section.id }}::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: rgb(75 120 198 / 0.12);
+    pointer-events: none;
+  }
+
+  #HoverFunctionality-{{ section.id }}::after {
+    content: "";
+    position: absolute;
+    inset: auto -2.4rem -2rem auto;
+    z-index: -1;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 50%;
+    background: rgb(248 249 252 / 0.58);
+    pointer-events: none;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__decor--leaf {
+    top: -3.8rem;
+    left: -2.8rem;
+    z-index: -1;
+    width: 23rem;
+    height: 17rem;
+    opacity: 0.44;
+    background:
+      linear-gradient(18deg, transparent 31%, rgb(42 69 111 / 0.82) 32% 33%, transparent 34%),
+      linear-gradient(10deg, transparent 42%, rgb(42 69 111 / 0.74) 43% 44%, transparent 45%),
+      linear-gradient(28deg, transparent 53%, rgb(42 69 111 / 0.66) 54% 55%, transparent 56%),
+      linear-gradient(40deg, transparent 61%, rgb(42 69 111 / 0.58) 62% 63%, transparent 64%);
+    transform: rotate(-10deg);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__decor--specks {
+    right: 0.5rem;
+    top: 2rem;
+    z-index: -1;
+    width: 16rem;
+    height: 22rem;
+    opacity: 0.35;
+    background-image:
+      radial-gradient(circle, rgb(255 255 255 / 0.8) 0 0.16rem, transparent 0.18rem),
+      radial-gradient(circle, rgb(255 255 255 / 0.56) 0 0.11rem, transparent 0.13rem);
+    background-position: 0 0, 1rem 1.2rem;
+    background-size: 1.35rem 1.35rem, 1.65rem 1.65rem;
+    transform: rotate(-15deg);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__inner {
+    position: relative;
+    z-index: 1;
+    width: min(100%, var(--hf-max-width));
+    margin: 0 auto;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__intro {
+    width: min(100%, var(--hf-content-width));
+    margin: 0 auto 2.4rem;
+    text-align: center;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__heading {
+    margin: 0 0 1rem;
+    color: var(--hf-text);
+    font-size: var(--hf-heading-size);
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: 0;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__text {
+    color: var(--hf-body);
+    font-size: var(--hf-text-size);
+    line-height: 1.65;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__text p {
+    margin: 0;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__text p + p {
+    margin-top: 0.75em;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__cards {
+    display: grid;
+    grid-template-columns: repeat(var(--hf-desktop-columns), minmax(0, 1fr));
+    gap: var(--hf-card-gap);
+    width: min(100%, 51.8rem);
+    margin: 0 auto;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-width: 0;
+    min-height: var(--hf-card-height);
+    margin: 0;
+    padding: 1.25rem;
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--hf-card-radius);
+    color: var(--hf-card-text);
+    background: rgb(255 255 255 / 0.78);
+    box-shadow: 0 0.25rem 0.9rem rgb(35 64 109 / 0.25);
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+    transform: translateY(0);
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      color 220ms ease;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:hover,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:focus-visible,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card.is-active {
+    color: var(--hf-card-active-text);
+    box-shadow: 0 0.6rem 1.4rem rgb(22 37 66 / 0.34);
+    transform: translateY(-0.18rem);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:focus-visible {
+    outline: 0.15rem solid currentcolor;
+    outline-offset: 0.2rem;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card-media,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card-wash,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__fallback {
+    position: absolute;
+    inset: 0;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.01);
+    transition: transform 300ms ease;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:hover .hover-functionality__card-image,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:focus-visible .hover-functionality__card-image,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card.is-active .hover-functionality__card-image {
+    transform: scale(1.07);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card-image--mobile {
+    display: none;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__fallback {
+    display: block;
+    transform: scale(1.01);
+    transition: transform 300ms ease;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:hover .hover-functionality__fallback,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:focus-visible .hover-functionality__fallback,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card.is-active .hover-functionality__fallback {
+    transform: scale(1.07);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__fallback--1 {
+    background:
+      radial-gradient(circle at 22% 22%, rgb(253 245 211 / 0.95) 0 1.6rem, transparent 1.7rem),
+      radial-gradient(circle at 72% 72%, rgb(83 95 57 / 0.42) 0 2.4rem, transparent 2.5rem),
+      radial-gradient(circle at 34% 68%, rgb(121 63 89 / 0.4) 0 1.7rem, transparent 1.8rem),
+      linear-gradient(135deg, #f7f3e8 0%, #d9e1c8 58%, #edf2e8 100%);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__fallback--2 {
+    background:
+      radial-gradient(circle at 52% 42%, rgb(255 244 232 / 0.9) 0 3.5rem, transparent 3.6rem),
+      radial-gradient(circle at 56% 66%, rgb(129 165 120 / 0.32) 0 1.1rem, transparent 1.2rem),
+      linear-gradient(140deg, #f7efe7 0%, #e7d5c4 48%, #f9f5ee 100%);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__fallback--3 {
+    background:
+      radial-gradient(circle at 64% 37%, rgb(248 248 246 / 0.98) 0 2.3rem, transparent 2.4rem),
+      radial-gradient(circle at 70% 58%, rgb(106 177 80 / 0.34) 0 1.9rem, transparent 2rem),
+      linear-gradient(45deg, transparent 43%, rgb(83 149 89 / 0.38) 44% 47%, transparent 48%),
+      linear-gradient(135deg, #eef6ee 0%, #f8faf8 48%, #d6ead6 100%);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__fallback--4,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__fallback--5,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__fallback--6 {
+    background:
+      radial-gradient(circle at 57% 34%, rgb(255 236 223 / 0.8) 0 3.2rem, transparent 3.3rem),
+      radial-gradient(circle at 44% 68%, rgb(84 55 46 / 0.24) 0 3.2rem, transparent 3.3rem),
+      linear-gradient(135deg, #ecd7c9 0%, #c0aa9f 48%, #e6d7d0 100%);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card-wash {
+    z-index: 1;
+    background: rgb(255 255 255 / var(--hf-card-overlay-opacity));
+    transition: background 220ms ease;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:hover .hover-functionality__card-wash,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:focus-visible .hover-functionality__card-wash,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card.is-active .hover-functionality__card-wash {
+    background: rgb(18 18 18 / var(--hf-card-active-opacity));
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__plus {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    color: #111111;
+    background: rgb(255 255 255 / 0.92);
+    box-shadow: 0 0.25rem 0.85rem rgb(0 0 0 / 0.18);
+    opacity: 0;
+    transform: scale(0.82) rotate(0deg);
+    transition:
+      opacity 180ms ease,
+      transform 220ms ease;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__plus svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__plus path {
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:hover .hover-functionality__plus,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:focus-visible .hover-functionality__plus,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card.is-active .hover-functionality__plus {
+    opacity: 1;
+    transform: scale(1) rotate(90deg);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__copy {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: min(100%, 14rem);
+    min-height: 4rem;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card-title,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card-description {
+    grid-area: 1 / 1;
+    display: block;
+    width: 100%;
+    letter-spacing: 0;
+    transition:
+      opacity 180ms ease,
+      transform 220ms ease;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card-title {
+    font-size: var(--hf-card-title-size);
+    line-height: 1.25;
+    font-weight: 800;
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card-description {
+    font-size: var(--hf-card-text-size);
+    line-height: 1.35;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card--has-hover-text:hover .hover-functionality__card-title,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card--has-hover-text:focus-visible .hover-functionality__card-title,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card--has-hover-text.is-active .hover-functionality__card-title {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:hover .hover-functionality__card-description,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card:focus-visible .hover-functionality__card-description,
+  #HoverFunctionality-{{ section.id }} .hover-functionality__card.is-active .hover-functionality__card-description {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media screen and (max-width: 989px) {
+    #HoverFunctionality-{{ section.id }} .hover-functionality__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: min(100%, 42rem);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #HoverFunctionality-{{ section.id }} {
+      padding-top: calc(var(--hf-padding-top) * 0.75);
+      padding-right: var(--hf-mobile-padding-inline);
+      padding-bottom: calc(var(--hf-padding-bottom) * 0.85);
+      padding-left: var(--hf-mobile-padding-inline);
+      background:
+        radial-gradient(circle at 97% 9%, rgb(248 249 252 / 0.9) 0 2.8rem, transparent 2.9rem),
+        radial-gradient(circle at 6% 98%, rgb(248 249 252 / 0.82) 0 2.2rem, transparent 2.3rem),
+        linear-gradient(145deg, #9db8df 0%, var(--hf-bg) 62%, #4d80d5 100%);
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__background--desktop {
+      display: none;
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__background--mobile {
+      display: block;
+    }
+
+    #HoverFunctionality-{{ section.id }}::after {
+      width: 11rem;
+      height: 11rem;
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__decor--leaf {
+      width: 15rem;
+      height: 11rem;
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__decor--specks {
+      right: -3rem;
+      top: 5rem;
+      width: 12rem;
+      height: 15rem;
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__intro {
+      margin-bottom: 1.55rem;
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__heading {
+      margin-bottom: 0.75rem;
+      font-size: var(--hf-heading-mobile-size);
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__text {
+      font-size: calc(var(--hf-text-size) * 0.94);
+      line-height: 1.55;
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__cards {
+      grid-template-columns: repeat(var(--hf-mobile-columns), minmax(0, 1fr));
+      gap: calc(var(--hf-card-gap) * 0.78);
+      width: min(100%, 28rem);
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__card {
+      min-height: var(--hf-card-mobile-height);
+      padding: 1rem;
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__card-media--has-mobile .hover-functionality__card-image--desktop {
+      display: none;
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__card-image--mobile {
+      display: block;
+    }
+
+    #HoverFunctionality-{{ section.id }} .hover-functionality__plus {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById('HoverFunctionality-{{ section.id }}');
+
+    if (!section || section.dataset.hoverFunctionalityReady === 'true') {
+      return;
+    }
+
+    section.dataset.hoverFunctionalityReady = 'true';
+
+    const cards = Array.from(section.querySelectorAll('[data-hover-feature-card]'));
+    const defaultCard = cards.find((card) => card.dataset.defaultActive === 'true') || cards[0];
+
+    if (!cards.length) {
+      return;
+    }
+
+    const activateCard = (activeCard) => {
+      cards.forEach((card) => {
+        const isActive = card === activeCard;
+        card.classList.toggle('is-active', isActive);
+        card.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    };
+
+    cards.forEach((card) => {
+      card.addEventListener('mouseenter', () => activateCard(card));
+      card.addEventListener('focus', () => activateCard(card));
+      card.addEventListener('click', () => activateCard(card));
+    });
+
+    section.addEventListener('mouseleave', () => {
+      if (window.matchMedia('(hover: hover)').matches) {
+        activateCard(defaultCard);
+      }
+    });
+
+    activateCard(defaultCard);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hover functionality",
+  "tag": "section",
+  "class": "hover-functionality-wrapper section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Because your skin deserves better."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>At Since A+, we believe skincare should be simple, effective, and kind. That's why our products are crafted with purpose, blending the power of nature and science to give you real results without the fuss.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile background image",
+      "info": "Optional. Leave blank to use the desktop image on mobile."
+    },
+    {
+      "type": "range",
+      "id": "background_image_opacity",
+      "label": "Background image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Section content width",
+      "min": 720,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 1060
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Text width",
+      "min": 360,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 620
+    },
+    {
+      "type": "select",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "options": [
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "active_card_index",
+      "label": "Default active card",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#76A6ED"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#161616"
+    },
+    {
+      "type": "color",
+      "id": "card_active_text_color",
+      "label": "Card active text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_inline",
+      "label": "Side padding",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_inline",
+      "label": "Side padding mobile",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size desktop",
+      "min": 12,
+      "max": 54,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "heading_mobile_size",
+      "label": "Heading size mobile",
+      "min": 16,
+      "max": 38,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Card title size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "card_text_size",
+      "label": "Card hover text size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Card height desktop",
+      "min": 160,
+      "max": 420,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "card_mobile_height",
+      "label": "Card height mobile",
+      "min": 150,
+      "max": 380,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "card_overlay_opacity",
+      "label": "Card resting overlay",
+      "min": 0,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "card_active_overlay_opacity",
+      "label": "Card hover overlay",
+      "min": 0,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "default": 75
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image",
+          "info": "Optional. Leave blank to use the desktop image on mobile."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Effective Formulas"
+        },
+        {
+          "type": "textarea",
+          "id": "hover_text",
+          "label": "Hover text",
+          "default": "Thoughtfully made for visible, fuss-free results."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Hover functionality",
+      "category": "Image",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "title": "Effective Formulas",
+            "hover_text": "Purposeful blends that help your skin feel its best."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "title": "Clean & Safe",
+            "hover_text": "Gentle ingredients selected with everyday skin in mind."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "title": "Sustainably Made",
+            "hover_text": "Considered choices from formula to finish."
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "title": "Cruelty Free",
+            "hover_text": "Always tested on skin, never on animals."
+          }
+        }
+      },
+      "block_order": ["feature_1", "feature_2", "feature_3", "feature_4"]
+    }
+  ]
+}
+{% endschema %}

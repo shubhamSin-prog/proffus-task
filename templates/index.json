@@ -89,6 +89,7 @@
             },
             "button_ccRq7L": {
               "type": "button",
+              "disabled": true,
               "settings": {
                 "label": "Shop now",
                 "link": "shopify://collections/all",
@@ -189,6 +190,7 @@
             },
             "button_tEqVtw": {
               "type": "button",
+              "disabled": true,
               "settings": {
                 "label": "Shop now",
                 "link": "shopify://collections/all",

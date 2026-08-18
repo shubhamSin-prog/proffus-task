@@ -127,6 +127,7 @@
         "feature_TdJAKR": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/generate-a-with-women.png",
             "image_alt": "",
             "title": "Effective Formulas",
             "hover_text": "Purposeful blends that help your skin feel its best."
@@ -135,6 +136,7 @@
         "feature_baTJUe": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/create-1000-1000-white-shirt-image-with-femal.png",
             "image_alt": "",
             "title": "Clean & Safe",
             "hover_text": "Gentle ingredients selected with everyday skin in mind."
@@ -143,6 +145,7 @@
         "feature_Lr47UU": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/generate-a-image-with-female-1500x1500.png",
             "image_alt": "",
             "title": "Sustainably Made",
             "hover_text": "Considered choices from formula to finish."
@@ -167,7 +170,7 @@
       "settings": {
         "heading": "Because your skin deserves better.",
         "text": "<p>At Since A+, we believe skincare should be simple, effective, and kind. That's why our products are crafted with purpose, blending the power of nature and science to give you real results without the fuss.</p>",
-        "background_image_opacity": 80,
+        "background_image_opacity": 100,
         "max_width": 1060,
         "content_width": 620,
         "desktop_columns": "4",

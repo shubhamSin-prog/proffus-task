@@ -196,7 +196,7 @@
         "card_title_size": 13,
         "card_text_size": 12,
         "card_height": 370,
-        "card_mobile_height": 220,
+        "card_mobile_height": 200,
         "card_overlay_opacity": 70,
         "card_active_overlay_opacity": 75
       }

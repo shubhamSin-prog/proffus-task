@@ -27,6 +27,7 @@
         "slide_aLhqdU": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/rack-of-womens-clothing.jpg",
             "eyebrow": "Featured",
             "heading": "Explore curated picks",
             "text": "Find the pieces customers are loving right now.",

@@ -51,7 +51,7 @@
         "autoplay_speed": 3,
         "show_pagination": true,
         "pagination_style": "dots",
-        "overlay_opacity": 25,
+        "overlay_opacity": 5,
         "background_color": "",
         "padding-block-start": 0,
         "padding-block-end": 0
@@ -129,7 +129,7 @@
         "feature_TdJAKR": {
           "type": "feature",
           "settings": {
-            "image": "shopify://shop_images/generate-a-with-women.png",
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_19_2026_12_29_50_AM_1.png",
             "image_alt": "",
             "title": "Effective Formulas",
             "hover_text": "Purposeful blends that help your skin feel its best."

@@ -9,30 +9,18 @@
  */
 {
   "sections": {
-<<<<<<< Updated upstream
     "link_slider_NwzGyW": {
-=======
-    "link_slider_top": {
->>>>>>> Stashed changes
       "type": "link-slider",
       "blocks": {
         "slide_k7Vf6y": {
           "type": "slide",
           "settings": {
-<<<<<<< Updated upstream
             "image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
             "eyebrow": "New arrivals",
             "heading": "Browse our latest products",
             "text": "Fresh styles are ready to explore.",
             "link_label": "",
             "link": "shopify://collections/best-seller",
-=======
-            "eyebrow": "New arrivals",
-            "heading": "Browse our latest products",
-            "text": "Fresh styles are ready to explore.",
-            "link_label": "Shop all",
-            "image_link": "shopify://collections/all",
->>>>>>> Stashed changes
             "open_in_new_tab": false
           }
         },
@@ -43,13 +31,8 @@
             "eyebrow": "Featured",
             "heading": "Explore curated picks",
             "text": "Find the pieces customers are loving right now.",
-<<<<<<< Updated upstream
             "link_label": "",
             "link": "shopify://collections/all",
-=======
-            "link_label": "View collection",
-            "image_link": "shopify://collections/all",
->>>>>>> Stashed changes
             "open_in_new_tab": false
           }
         }
@@ -65,15 +48,9 @@
         "content_alignment": "flex-start",
         "text_alignment": "left",
         "autoplay": true,
-<<<<<<< Updated upstream
         "autoplay_speed": 3,
         "overlay_opacity": 40,
         "background_color": "",
-=======
-        "autoplay_speed": 4,
-        "overlay_opacity": 40,
-        "background_color": "rgba(0,0,0,0)",
->>>>>>> Stashed changes
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -221,16 +198,101 @@
         "card_overlay_opacity": 70,
         "card_active_overlay_opacity": 75
       }
+    },
+    "lookup_banner_R8xLpQ": {
+      "type": "lookup-banner",
+      "blocks": {
+        "detail_1": {
+          "type": "detail",
+          "settings": {
+            "heading": "Product details",
+            "text": "<p>Lightweight texture, clean finish, and a soft glow for everyday skincare routines.</p>",
+            "open_by_default": true
+          }
+        },
+        "detail_2": {
+          "type": "detail",
+          "settings": {
+            "heading": "Shipping and returns",
+            "text": "<p>Ships quickly with easy returns on eligible orders.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "detail_1",
+        "detail_2"
+      ],
+      "name": "Lookup Banner",
+      "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "text": "",
+        "banner_image": "shopify://shop_images/generate-a-image-with-female-1500x1500.png",
+        "mobile_banner_image": "",
+        "banner_alt": "",
+        "trigger_mode": "click",
+        "show_popup_default": false,
+        "popup_image": "shopify://shop_images/create-1000-1000-white-shirt-image-with-femal.png",
+        "mobile_popup_image": "",
+        "popup_image_alt": "",
+        "popup_eyebrow": "Since A+",
+        "product_title": "Fashion Skin",
+        "price_text": "$125 USD",
+        "description": "<p>A lightweight serum designed for a fresh, polished glow and easy everyday layering.</p>",
+        "cta_label": "Shop now",
+        "cta_link": "shopify://collections/all",
+        "cta_open_new_tab": false,
+        "marker_label": "Open product popup",
+        "show_rating": true,
+        "rating_stars": 5,
+        "rating_text": "4.9 (128 reviews)",
+        "max_width": 1200,
+        "banner_width": 760,
+        "banner_aspect_ratio": "1 / 1",
+        "banner_mobile_aspect_ratio": "4 / 5",
+        "banner_image_position": "center center",
+        "banner_mobile_image_position": "center center",
+        "popup_width": 680,
+        "popup_image_width": 42,
+        "marker_x": 5,
+        "marker_y": 94,
+        "popup_x": 62,
+        "popup_y": 93,
+        "popup_bottom_space": 260,
+        "background_color": "#f5f6f8",
+        "banner_background_color": "#e7ece9",
+        "popup_background_color": "#ffffff",
+        "text_color": "#141414",
+        "muted_text_color": "#5f635d",
+        "accent_color": "#516f65",
+        "rating_color": "#d59a2f",
+        "border_color": "#deded8",
+        "button_background_color": "#151515",
+        "button_text_color": "#ffffff",
+        "marker_background_color": "#ffffff",
+        "marker_icon_color": "#151515",
+        "padding_top": 56,
+        "padding_bottom": 24,
+        "padding_inline": 28,
+        "mobile_padding_inline": 16,
+        "intro_gap": 0,
+        "banner_radius": 0,
+        "popup_radius": 2,
+        "product_image_radius": 0,
+        "marker_size": 36,
+        "heading_size": 34,
+        "heading_mobile_size": 28,
+        "text_size": 14,
+        "popup_title_size": 20,
+        "popup_body_size": 12
+      }
     }
   },
   "order": [
-<<<<<<< Updated upstream
     "link_slider_NwzGyW",
+    "lookup_banner_R8xLpQ",
     "perfect_white_shirt_X8qByh",
     "hover_functionality_V34UeT"
-=======
-    "link_slider_top",
-    "product_list_fa6P9H"
->>>>>>> Stashed changes
   ]
 }

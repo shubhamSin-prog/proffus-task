@@ -154,6 +154,7 @@
         "feature_gXMCr3": {
           "type": "feature",
           "settings": {
+            "image": "shopify://shop_images/generate-a-women-1500-1500-model.png",
             "image_alt": "",
             "title": "Cruelty Free",
             "hover_text": "Always tested on skin, never on animals."

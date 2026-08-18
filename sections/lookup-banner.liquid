@@ -1,0 +1,1542 @@
+{% liquid
+  assign selected_product = section.settings.product
+  assign selected_variant = selected_product.selected_or_first_available_variant
+
+  assign popup_title = section.settings.product_title
+  if popup_title == blank and selected_product != blank
+    assign popup_title = selected_product.title
+  endif
+
+  assign popup_url = section.settings.cta_link
+  if popup_url == blank and selected_product != blank
+    assign popup_url = selected_product.url
+  endif
+
+  assign popup_price = section.settings.price_text
+  if popup_price == blank and selected_variant != blank
+    assign popup_price = selected_variant.price | money
+  endif
+
+  assign popup_image = section.settings.popup_image
+  if popup_image == blank and selected_product != blank
+    assign popup_image = selected_product.featured_image
+  endif
+
+  assign banner_alt = section.settings.banner_alt
+  if banner_alt == blank
+    assign banner_alt = section.settings.heading | default: popup_title
+  endif
+
+  assign popup_image_alt = section.settings.popup_image_alt
+  if popup_image_alt == blank
+    assign popup_image_alt = popup_title
+  endif
+
+  assign marker_label = section.settings.marker_label
+  if marker_label == blank
+    assign marker_label = popup_title | default: 'Open popup'
+  endif
+
+  assign rating_label = section.settings.rating_text
+  if rating_label == blank
+    assign rating_label = section.settings.rating_stars | append: ' out of 5 stars'
+  endif
+
+  assign has_intro = false
+  if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.text != blank
+    assign has_intro = true
+  endif
+%}
+
+<section
+  id="LookupBanner-{{ section.id }}"
+  class="lookup-banner"
+  data-trigger-mode="{{ section.settings.trigger_mode }}"
+  data-default-open="{{ section.settings.show_popup_default }}"
+  style="
+    --lb-bg: {{ section.settings.background_color }};
+    --lb-text: {{ section.settings.text_color }};
+    --lb-muted: {{ section.settings.muted_text_color }};
+    --lb-accent: {{ section.settings.accent_color }};
+    --lb-star: {{ section.settings.rating_color }};
+    --lb-banner-bg: {{ section.settings.banner_background_color }};
+    --lb-popup-bg: {{ section.settings.popup_background_color }};
+    --lb-border: {{ section.settings.border_color }};
+    --lb-button-bg: {{ section.settings.button_background_color }};
+    --lb-button-text: {{ section.settings.button_text_color }};
+    --lb-marker-bg: {{ section.settings.marker_background_color }};
+    --lb-marker-text: {{ section.settings.marker_icon_color }};
+    --lb-max-width: {{ section.settings.max_width }}px;
+    --lb-banner-width: {{ section.settings.banner_width }}px;
+    --lb-popup-width: {{ section.settings.popup_width }}px;
+    --lb-popup-image-width: {{ section.settings.popup_image_width }}%;
+    --lb-padding-top: {{ section.settings.padding_top }}px;
+    --lb-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --lb-padding-inline: {{ section.settings.padding_inline }}px;
+    --lb-mobile-padding-inline: {{ section.settings.mobile_padding_inline }}px;
+    --lb-intro-gap: {{ section.settings.intro_gap }}px;
+    --lb-banner-radius: {{ section.settings.banner_radius }}px;
+    --lb-popup-radius: {{ section.settings.popup_radius }}px;
+    --lb-product-radius: {{ section.settings.product_image_radius }}px;
+    --lb-banner-aspect: {{ section.settings.banner_aspect_ratio }};
+    --lb-banner-mobile-aspect: {{ section.settings.banner_mobile_aspect_ratio }};
+    --lb-banner-position: {{ section.settings.banner_image_position }};
+    --lb-banner-mobile-position: {{ section.settings.banner_mobile_image_position }};
+    --lb-marker-size: {{ section.settings.marker_size }}px;
+    --lb-marker-x: {{ section.settings.marker_x }}%;
+    --lb-marker-y: {{ section.settings.marker_y }}%;
+    --lb-popup-x: {{ section.settings.popup_x }}%;
+    --lb-popup-y: {{ section.settings.popup_y }}%;
+    --lb-popup-reserve: {{ section.settings.popup_bottom_space }}px;
+    --lb-heading-size: {{ section.settings.heading_size }}px;
+    --lb-heading-mobile-size: {{ section.settings.heading_mobile_size }}px;
+    --lb-text-size: {{ section.settings.text_size }}px;
+    --lb-popup-title-size: {{ section.settings.popup_title_size }}px;
+    --lb-popup-body-size: {{ section.settings.popup_body_size }}px;
+  "
+>
+  <div class="lookup-banner__inner">
+    {% if has_intro %}
+      <div class="lookup-banner__intro">
+        {% if section.settings.eyebrow != blank %}
+          <p class="lookup-banner__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="lookup-banner__heading">{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <div class="lookup-banner__text">{{ section.settings.text }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="lookup-banner__stage" data-lookup-stage>
+      <div class="lookup-banner__frame">
+        <button
+          type="button"
+          class="lookup-banner__trigger{% if section.settings.mobile_banner_image != blank %} lookup-banner__trigger--has-mobile{% endif %}"
+          aria-haspopup="dialog"
+          aria-expanded="{% if section.settings.show_popup_default %}true{% else %}false{% endif %}"
+          aria-controls="LookupBannerPopup-{{ section.id }}"
+          aria-label="{{ marker_label | escape }}"
+          data-lookup-trigger
+        >
+          {% if section.settings.banner_image != blank %}
+            {{
+              section.settings.banner_image
+              | image_url: width: 2200
+              | image_tag:
+                widths: '375, 550, 750, 990, 1200, 1600, 2000, 2200',
+                sizes: '(min-width: 990px) min(100vw, 1100px), 100vw',
+                loading: 'lazy',
+                class: 'lookup-banner__image lookup-banner__image--desktop',
+                alt: banner_alt
+            }}
+          {% else %}
+            {{ 'hero-apparel-2' | placeholder_svg_tag: 'lookup-banner__image lookup-banner__placeholder lookup-banner__image--desktop' }}
+          {% endif %}
+
+          {% if section.settings.mobile_banner_image != blank %}
+            {{
+              section.settings.mobile_banner_image
+              | image_url: width: 1100
+              | image_tag:
+                widths: '320, 420, 550, 750, 900, 1100',
+                sizes: '100vw',
+                loading: 'lazy',
+                class: 'lookup-banner__image lookup-banner__image--mobile',
+                alt: banner_alt
+            }}
+          {% endif %}
+
+          <span class="lookup-banner__wash" aria-hidden="true"></span>
+          <span class="lookup-banner__marker" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 5v14" />
+              <path d="M5 12h14" />
+            </svg>
+          </span>
+        </button>
+
+        <div
+          id="LookupBannerPopup-{{ section.id }}"
+          class="lookup-banner__popup{% if section.settings.show_popup_default %} is-open{% endif %}"
+          role="dialog"
+          aria-label="{{ marker_label | escape }}"
+          data-lookup-popup
+          {% unless section.settings.show_popup_default %}
+            hidden
+          {% endunless %}
+        >
+          <button type="button" class="lookup-banner__close" aria-label="Close popup" data-lookup-close>
+            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+              <path d="M6 6l12 12" />
+              <path d="M18 6L6 18" />
+            </svg>
+          </button>
+
+          <div class="lookup-banner__product">
+            <div class="lookup-banner__product-media{% if section.settings.mobile_popup_image != blank %} lookup-banner__product-media--has-mobile{% endif %}">
+              {% if popup_image != blank %}
+                {{
+                  popup_image
+                  | image_url: width: 1000
+                  | image_tag:
+                    widths: '240, 360, 480, 640, 800, 1000',
+                    sizes: '(min-width: 750px) 310px, 90vw',
+                    loading: 'lazy',
+                    class: 'lookup-banner__product-image lookup-banner__product-image--desktop',
+                    alt: popup_image_alt
+                }}
+              {% else %}
+                {{ 'product-apparel-1' | placeholder_svg_tag: 'lookup-banner__product-image lookup-banner__product-placeholder lookup-banner__product-image--desktop' }}
+              {% endif %}
+
+              {% if section.settings.mobile_popup_image != blank %}
+                {{
+                  section.settings.mobile_popup_image
+                  | image_url: width: 800
+                  | image_tag:
+                    widths: '240, 360, 480, 640, 800',
+                    sizes: '90vw',
+                    loading: 'lazy',
+                    class: 'lookup-banner__product-image lookup-banner__product-image--mobile',
+                    alt: popup_image_alt
+                }}
+              {% endif %}
+            </div>
+
+            <div class="lookup-banner__content">
+              {% if section.settings.popup_eyebrow != blank %}
+                <p class="lookup-banner__popup-eyebrow">{{ section.settings.popup_eyebrow | escape }}</p>
+              {% endif %}
+
+              {% if popup_title != blank %}
+                <h3 class="lookup-banner__popup-title">{{ popup_title | escape }}</h3>
+              {% endif %}
+
+              {% if section.settings.show_rating %}
+                <div class="lookup-banner__rating" aria-label="{{ rating_label | escape }}">
+                  <span class="lookup-banner__stars" aria-hidden="true">
+                    {% for rating_index in (1..5) %}
+                      <svg
+                        class="lookup-banner__star{% if rating_index <= section.settings.rating_stars %} is-filled{% endif %}"
+                        viewBox="0 0 20 20"
+                        focusable="false"
+                      >
+                        {% render 'icon', icon: 'star' %}
+                      </svg>
+                    {% endfor %}
+                  </span>
+
+                  {% if section.settings.rating_text != blank %}
+                    <span class="lookup-banner__rating-text">{{ section.settings.rating_text | escape }}</span>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if popup_price != blank %}
+                <p class="lookup-banner__price">{{ popup_price | escape }}</p>
+              {% endif %}
+
+              {% if section.settings.description != blank %}
+                <div class="lookup-banner__description">{{ section.settings.description }}</div>
+              {% endif %}
+
+              {% if section.settings.cta_label != blank and popup_url != blank %}
+                <a
+                  class="lookup-banner__button"
+                  href="{{ popup_url }}"
+                  {% if section.settings.cta_open_new_tab %}
+                    target="_blank" rel="noopener noreferrer"
+                  {% endif %}
+                >
+                  {{ section.settings.cta_label | escape }}
+                </a>
+              {% endif %}
+
+              {% if section.blocks.size > 0 %}
+                <div class="lookup-banner__details">
+                  {% for block in section.blocks %}
+                    <details
+                      class="lookup-banner__detail"
+                      {% if block.settings.open_by_default %}
+                        open
+                      {% endif %}
+                      {{ block.shopify_attributes }}
+                    >
+                      <summary class="lookup-banner__detail-summary">
+                        <span>{{ block.settings.heading | escape }}</span>
+                        <span class="lookup-banner__detail-icon" aria-hidden="true"></span>
+                      </summary>
+
+                      {% if block.settings.text != blank %}
+                        <div class="lookup-banner__detail-text">{{ block.settings.text }}</div>
+                      {% endif %}
+                    </details>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #LookupBanner-{{ section.id }} {
+    padding: var(--lb-padding-top) var(--lb-padding-inline) var(--lb-padding-bottom);
+    color: var(--lb-text);
+    background: var(--lb-bg);
+  }
+
+  #LookupBanner-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__inner {
+    width: min(100%, var(--lb-max-width));
+    margin: 0 auto;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__intro {
+    display: grid;
+    gap: 0.75rem;
+    width: min(100%, 46rem);
+    margin: 0 auto var(--lb-intro-gap);
+    text-align: center;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__eyebrow,
+  #LookupBanner-{{ section.id }} .lookup-banner__popup-eyebrow,
+  #LookupBanner-{{ section.id }} .lookup-banner__price {
+    margin: 0;
+    letter-spacing: 0;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__eyebrow,
+  #LookupBanner-{{ section.id }} .lookup-banner__popup-eyebrow {
+    color: var(--lb-accent);
+    font-size: 0.75rem;
+    line-height: 1.2;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__heading {
+    margin: 0;
+    color: var(--lb-text);
+    font-size: var(--lb-heading-size);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__text {
+    color: var(--lb-muted);
+    font-size: var(--lb-text-size);
+    line-height: 1.65;
+    letter-spacing: 0;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__text p,
+  #LookupBanner-{{ section.id }} .lookup-banner__description p,
+  #LookupBanner-{{ section.id }} .lookup-banner__detail-text p {
+    margin: 0;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__text p + p,
+  #LookupBanner-{{ section.id }} .lookup-banner__description p + p,
+  #LookupBanner-{{ section.id }} .lookup-banner__detail-text p + p {
+    margin-top: 0.7em;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__stage {
+    width: min(100%, var(--lb-banner-width));
+    margin: 0 auto;
+    padding-bottom: var(--lb-popup-reserve);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__frame {
+    position: relative;
+    isolation: isolate;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__trigger {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: var(--lb-banner-aspect);
+    min-height: 16rem;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--lb-banner-radius);
+    color: inherit;
+    background: var(--lb-banner-bg);
+    box-shadow: 0 1.1rem 3rem rgb(24 31 42 / 0.12);
+    cursor: pointer;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__trigger:focus-visible {
+    outline: 0.15rem solid var(--lb-accent);
+    outline-offset: 0.25rem;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__image,
+  #LookupBanner-{{ section.id }} .lookup-banner__product-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__image {
+    object-position: var(--lb-banner-position);
+    transform: scale(1.01);
+    transition: transform 360ms ease;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__trigger:hover .lookup-banner__image,
+  #LookupBanner-{{ section.id }} .lookup-banner__trigger:focus-visible .lookup-banner__image,
+  #LookupBanner-{{ section.id }}.is-popup-open .lookup-banner__image {
+    transform: scale(1.045);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__placeholder,
+  #LookupBanner-{{ section.id }} .lookup-banner__product-placeholder {
+    background: linear-gradient(135deg, #f6f4ef 0%, #d8ddd7 52%, #f1f4f7 100%);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__image--mobile,
+  #LookupBanner-{{ section.id }} .lookup-banner__product-image--mobile {
+    display: none;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__wash {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0)),
+      radial-gradient(circle at var(--lb-marker-x) var(--lb-marker-y), rgb(255 255 255 / 0.34) 0 0.1rem, transparent 9rem);
+    pointer-events: none;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__marker {
+    position: absolute;
+    left: var(--lb-marker-x);
+    top: var(--lb-marker-y);
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: var(--lb-marker-size);
+    height: var(--lb-marker-size);
+    border-radius: 50%;
+    color: var(--lb-marker-text);
+    background: var(--lb-marker-bg);
+    box-shadow: 0 0.5rem 1.2rem rgb(18 24 32 / 0.18);
+    transform: translate(-50%, -50%);
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__marker svg {
+    width: 52%;
+    height: 52%;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__marker path,
+  #LookupBanner-{{ section.id }} .lookup-banner__close path {
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__trigger:hover .lookup-banner__marker,
+  #LookupBanner-{{ section.id }} .lookup-banner__trigger:focus-visible .lookup-banner__marker,
+  #LookupBanner-{{ section.id }}.is-popup-open .lookup-banner__marker {
+    box-shadow: 0 0.7rem 1.5rem rgb(18 24 32 / 0.24);
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  #LookupBanner-{{ section.id }}.is-popup-open .lookup-banner__marker {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1.06);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__popup {
+    position: absolute;
+    top: var(--lb-popup-y);
+    left: var(--lb-popup-x);
+    z-index: 4;
+    width: min(var(--lb-popup-width), calc(100vw - 2rem));
+    overflow: hidden;
+    border: 1px solid var(--lb-border);
+    border-radius: var(--lb-popup-radius);
+    color: var(--lb-text);
+    background: var(--lb-popup-bg);
+    box-shadow: 0 1.6rem 4.4rem rgb(21 27 34 / 0.22);
+    opacity: 0;
+    transform: translate(-50%, 0.65rem) scale(0.985);
+    transform-origin: top center;
+    transition:
+      opacity 180ms ease,
+      transform 220ms ease;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__popup[hidden] {
+    display: none;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__popup.is-open {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid rgb(17 17 17 / 0.08);
+    border-radius: 50%;
+    color: var(--lb-text);
+    background: rgb(255 255 255 / 0.88);
+    box-shadow: 0 0.35rem 1rem rgb(17 24 32 / 0.1);
+    cursor: pointer;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__close svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__close:focus-visible {
+    outline: 0.13rem solid var(--lb-accent);
+    outline-offset: 0.18rem;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__product {
+    display: grid;
+    grid-template-columns: minmax(0, var(--lb-popup-image-width)) minmax(0, 1fr);
+    min-height: 20rem;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__product-media {
+    min-width: 0;
+    min-height: 100%;
+    background: var(--lb-banner-bg);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__product-image {
+    border-radius: var(--lb-product-radius) 0 0 var(--lb-product-radius);
+    object-position: center;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: clamp(1.2rem, 3vw, 2rem);
+    padding-right: clamp(2.8rem, 4vw, 3.25rem);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__popup-title {
+    margin: 0.25rem 0 0;
+    color: var(--lb-text);
+    font-size: var(--lb-popup-title-size);
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__rating {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.5rem;
+    color: var(--lb-muted);
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__stars {
+    display: inline-flex;
+    gap: 0.12rem;
+    color: rgb(17 17 17 / 0.22);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__star {
+    width: 0.78rem;
+    height: 0.78rem;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__star.is-filled {
+    color: var(--lb-star);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__star path {
+    fill: currentcolor;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__price {
+    margin-top: 0.55rem;
+    color: var(--lb-text);
+    font-size: 0.9rem;
+    line-height: 1.25;
+    font-weight: 800;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__description {
+    margin-top: 0.85rem;
+    color: var(--lb-muted);
+    font-size: var(--lb-popup-body-size);
+    line-height: 1.65;
+    letter-spacing: 0;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 2.65rem;
+    margin-top: 1.05rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--lb-button-bg);
+    border-radius: 0;
+    color: var(--lb-button-text);
+    background: var(--lb-button-bg);
+    font-size: 0.78rem;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__button:hover,
+  #LookupBanner-{{ section.id }} .lookup-banner__button:focus-visible {
+    opacity: 0.82;
+    transform: translateY(-0.08rem);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__button:focus-visible {
+    outline: 0.13rem solid var(--lb-accent);
+    outline-offset: 0.18rem;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__details {
+    margin-top: 0.85rem;
+    border-top: 1px solid var(--lb-border);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__detail {
+    border-bottom: 1px solid var(--lb-border);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__detail-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2.45rem;
+    color: var(--lb-text);
+    font-size: 0.78rem;
+    line-height: 1.25;
+    font-weight: 800;
+    letter-spacing: 0;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__detail-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__detail-icon {
+    position: relative;
+    flex: 0 0 auto;
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__detail-icon::before,
+  #LookupBanner-{{ section.id }} .lookup-banner__detail-icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.72rem;
+    height: 0.08rem;
+    border-radius: 999px;
+    background: currentcolor;
+    transform: translate(-50%, -50%);
+    transition: transform 160ms ease;
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__detail-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  #LookupBanner-{{ section.id }} details[open] .lookup-banner__detail-icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  #LookupBanner-{{ section.id }} .lookup-banner__detail-text {
+    padding: 0 0 0.8rem;
+    color: var(--lb-muted);
+    font-size: var(--lb-popup-body-size);
+    line-height: 1.55;
+    letter-spacing: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    #LookupBanner-{{ section.id }} .lookup-banner__stage {
+      width: min(100%, 45rem);
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__popup {
+      width: min(var(--lb-popup-width), calc(100vw - 2rem));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #LookupBanner-{{ section.id }} {
+      padding-top: calc(var(--lb-padding-top) * 0.72);
+      padding-right: var(--lb-mobile-padding-inline);
+      padding-bottom: calc(var(--lb-padding-bottom) * 0.8);
+      padding-left: var(--lb-mobile-padding-inline);
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__intro {
+      margin-bottom: calc(var(--lb-intro-gap) * 0.72);
+      text-align: left;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__heading {
+      font-size: var(--lb-heading-mobile-size);
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__stage {
+      width: 100%;
+      padding-bottom: 0;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__trigger {
+      aspect-ratio: var(--lb-banner-mobile-aspect);
+      min-height: 18rem;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__trigger--has-mobile .lookup-banner__image--desktop {
+      display: none;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__image--mobile {
+      display: block;
+      object-position: var(--lb-banner-mobile-position);
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__marker {
+      width: max(2.35rem, calc(var(--lb-marker-size) * 0.9));
+      height: max(2.35rem, calc(var(--lb-marker-size) * 0.9));
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__popup {
+      position: relative;
+      top: auto;
+      left: auto;
+      width: 100%;
+      margin-top: 0.85rem;
+      transform: translateY(0.65rem) scale(0.985);
+      transform-origin: top center;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__popup.is-open {
+      transform: translateY(0) scale(1);
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__product {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__product-media {
+      aspect-ratio: 1 / 0.78;
+      min-height: 0;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__product-media--has-mobile .lookup-banner__product-image--desktop {
+      display: none;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__product-image--mobile {
+      display: block;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__product-image {
+      border-radius: var(--lb-product-radius) var(--lb-product-radius) 0 0;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__content {
+      padding: 1.25rem;
+      padding-top: 1.1rem;
+    }
+
+    #LookupBanner-{{ section.id }} .lookup-banner__close {
+      top: 0.65rem;
+      right: 0.65rem;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById('LookupBanner-{{ section.id }}');
+
+    if (!section || section.dataset.lookupBannerReady === 'true') {
+      return;
+    }
+
+    section.dataset.lookupBannerReady = 'true';
+
+    const stage = section.querySelector('[data-lookup-stage]');
+    const trigger = section.querySelector('[data-lookup-trigger]');
+    const popup = section.querySelector('[data-lookup-popup]');
+    const closeButton = section.querySelector('[data-lookup-close]');
+
+    if (!stage || !trigger || !popup) {
+      return;
+    }
+
+    let closeTimer;
+
+    const isOpen = () => popup.classList.contains('is-open');
+
+    const setOpen = (open, returnFocus = false) => {
+      window.clearTimeout(closeTimer);
+
+      if (open) {
+        popup.hidden = false;
+        window.requestAnimationFrame(() => {
+          popup.classList.add('is-open');
+          section.classList.add('is-popup-open');
+          trigger.setAttribute('aria-expanded', 'true');
+        });
+
+        return;
+      }
+
+      popup.classList.remove('is-open');
+      section.classList.remove('is-popup-open');
+      trigger.setAttribute('aria-expanded', 'false');
+
+      closeTimer = window.setTimeout(() => {
+        if (!isOpen()) {
+          popup.hidden = true;
+        }
+      }, 240);
+
+      if (returnFocus) {
+        trigger.focus();
+      }
+    };
+
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      setOpen(!isOpen());
+    });
+
+    if (closeButton) {
+      closeButton.addEventListener('click', () => setOpen(false, true));
+    }
+
+    document.addEventListener('click', (event) => {
+      if (!section.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+
+    section.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false, true);
+      }
+    });
+
+    if (section.dataset.triggerMode === 'hover_click' && window.matchMedia('(hover: hover)').matches) {
+      stage.addEventListener('mouseenter', () => setOpen(true));
+      stage.addEventListener('mouseleave', () => setOpen(false));
+      trigger.addEventListener('focus', () => setOpen(true));
+    }
+
+    if (section.dataset.defaultOpen === 'true') {
+      setOpen(true);
+    }
+
+    document.addEventListener('shopify:section:select', (event) => {
+      if (event.target === section) {
+        setOpen(true);
+      }
+    });
+
+    document.addEventListener('shopify:block:select', (event) => {
+      if (section.contains(event.target)) {
+        setOpen(true);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Lookup banner",
+  "tag": "section",
+  "class": "lookup-banner-wrapper section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Featured ritual"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tap the look to explore"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>A clean editorial banner with a shoppable popup for hero products.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Desktop banner image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_banner_image",
+      "label": "Mobile banner image",
+      "info": "Optional. Leave blank to use the desktop image on mobile."
+    },
+    {
+      "type": "text",
+      "id": "banner_alt",
+      "label": "Banner alt text"
+    },
+    {
+      "type": "select",
+      "id": "trigger_mode",
+      "label": "Popup trigger",
+      "options": [
+        {
+          "value": "click",
+          "label": "Click and tap"
+        },
+        {
+          "value": "hover_click",
+          "label": "Hover, click and tap"
+        }
+      ],
+      "default": "click"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_popup_default",
+      "label": "Show popup by default",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Popup product"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Linked product"
+    },
+    {
+      "type": "image_picker",
+      "id": "popup_image",
+      "label": "Popup image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_popup_image",
+      "label": "Mobile popup image",
+      "info": "Optional. Leave blank to use the popup image on mobile."
+    },
+    {
+      "type": "text",
+      "id": "popup_image_alt",
+      "label": "Popup image alt text"
+    },
+    {
+      "type": "text",
+      "id": "popup_eyebrow",
+      "label": "Popup eyebrow",
+      "default": "Since A+"
+    },
+    {
+      "type": "text",
+      "id": "product_title",
+      "label": "Product title",
+      "default": "Fashion Skin"
+    },
+    {
+      "type": "text",
+      "id": "price_text",
+      "label": "Price text",
+      "default": "$125 USD"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>A lightweight serum designed for a fresh, polished glow and easy everyday layering.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_open_new_tab",
+      "label": "Open button link in new tab",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "marker_label",
+      "label": "Marker accessibility label",
+      "default": "Open product popup"
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rating_stars",
+      "label": "Stars",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.9 (128 reviews)"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Section content width",
+      "min": 720,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "banner_width",
+      "label": "Banner width",
+      "min": 520,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 860
+    },
+    {
+      "type": "select",
+      "id": "banner_aspect_ratio",
+      "label": "Desktop banner ratio",
+      "options": [
+        {
+          "value": "1 / 1",
+          "label": "Square"
+        },
+        {
+          "value": "4 / 3",
+          "label": "Landscape"
+        },
+        {
+          "value": "16 / 9",
+          "label": "Wide"
+        }
+      ],
+      "default": "1 / 1"
+    },
+    {
+      "type": "select",
+      "id": "banner_mobile_aspect_ratio",
+      "label": "Mobile banner ratio",
+      "options": [
+        {
+          "value": "1 / 1",
+          "label": "Square"
+        },
+        {
+          "value": "4 / 5",
+          "label": "Portrait"
+        },
+        {
+          "value": "3 / 4",
+          "label": "Tall"
+        }
+      ],
+      "default": "4 / 5"
+    },
+    {
+      "type": "select",
+      "id": "banner_image_position",
+      "label": "Desktop image position",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "left center",
+          "label": "Left"
+        },
+        {
+          "value": "right center",
+          "label": "Right"
+        },
+        {
+          "value": "center top",
+          "label": "Top"
+        },
+        {
+          "value": "center bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "select",
+      "id": "banner_mobile_image_position",
+      "label": "Mobile image position",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "left center",
+          "label": "Left"
+        },
+        {
+          "value": "right center",
+          "label": "Right"
+        },
+        {
+          "value": "center top",
+          "label": "Top"
+        },
+        {
+          "value": "center bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "range",
+      "id": "popup_width",
+      "label": "Popup width",
+      "min": 420,
+      "max": 860,
+      "step": 20,
+      "unit": "px",
+      "default": 680
+    },
+    {
+      "type": "range",
+      "id": "popup_image_width",
+      "label": "Popup image width",
+      "min": 34,
+      "max": 58,
+      "step": 1,
+      "unit": "%",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "marker_x",
+      "label": "Marker horizontal position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "marker_y",
+      "label": "Marker vertical position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 94
+    },
+    {
+      "type": "range",
+      "id": "popup_x",
+      "label": "Popup horizontal position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 66
+    },
+    {
+      "type": "range",
+      "id": "popup_y",
+      "label": "Popup vertical position",
+      "min": 0,
+      "max": 120,
+      "step": 1,
+      "unit": "%",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "popup_bottom_space",
+      "label": "Desktop space below banner",
+      "min": 0,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "default": 230
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#f5f6f8"
+    },
+    {
+      "type": "color",
+      "id": "banner_background_color",
+      "label": "Banner fallback background",
+      "default": "#e7ece9"
+    },
+    {
+      "type": "color",
+      "id": "popup_background_color",
+      "label": "Popup background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#141414"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text color",
+      "default": "#5f635d"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#516f65"
+    },
+    {
+      "type": "color",
+      "id": "rating_color",
+      "label": "Rating star color",
+      "default": "#d59a2f"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#deded8"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background",
+      "default": "#151515"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "marker_background_color",
+      "label": "Marker background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "marker_icon_color",
+      "label": "Marker icon color",
+      "default": "#151515"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_inline",
+      "label": "Side padding",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_inline",
+      "label": "Side padding mobile",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "intro_gap",
+      "label": "Intro bottom gap",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "banner_radius",
+      "label": "Banner radius",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "popup_radius",
+      "label": "Popup radius",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "product_image_radius",
+      "label": "Popup image radius",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "marker_size",
+      "label": "Marker size",
+      "min": 28,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size desktop",
+      "min": 18,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "heading_mobile_size",
+      "label": "Heading size mobile",
+      "min": 18,
+      "max": 42,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Intro text size",
+      "min": 11,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "popup_title_size",
+      "label": "Popup title size",
+      "min": 14,
+      "max": 34,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "popup_body_size",
+      "label": "Popup body size",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "detail",
+      "name": "Popup detail",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "How to use"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Apply a small amount after cleansing, then follow with moisturizer.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Lookup banner",
+      "category": "Banners",
+      "blocks": {
+        "detail_1": {
+          "type": "detail",
+          "settings": {
+            "heading": "Product details",
+            "text": "<p>Clean finish, soft texture, and a lightweight feel made for daily routines.</p>",
+            "open_by_default": true
+          }
+        },
+        "detail_2": {
+          "type": "detail",
+          "settings": {
+            "heading": "Shipping and returns",
+            "text": "<p>Ships quickly with easy returns on eligible orders.</p>"
+          }
+        }
+      },
+      "block_order": ["detail_1", "detail_2"]
+    }
+  ]
+}
+{% endschema %}

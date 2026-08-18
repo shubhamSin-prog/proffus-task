@@ -230,7 +230,7 @@
         "text": "<p>A clean editorial banner with a shoppable popup for hero products.</p>",
         "banner_image": "shopify://shop_images/genrerate-a-banner-hot-model-width-2000-700.png",
         "banner_alt": "",
-        "trigger_mode": "click",
+        "trigger_mode": "hover_click",
         "show_popup_default": false,
         "product": "womens-formal-office-shirt-classic-professional-collection",
         "popup_image_alt": "",

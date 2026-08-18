@@ -131,6 +131,9 @@
 {% stylesheet %}
   .link-slider-section {
     --link-slider-min-padding: clamp(1.5rem, 5vw, 4rem);
+    font-family: var(--font-paragraph--family);
+    font-style: var(--font-paragraph--style);
+    font-weight: var(--font-paragraph--weight);
   }
 
   .link-slider slideshow-container {
@@ -236,6 +239,9 @@
   }
 
   .link-slider__eyebrow {
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
     font-size: var(--font-size--xs);
     text-transform: uppercase;
     letter-spacing: 0;
@@ -245,12 +251,17 @@
   .link-slider__heading {
     max-width: 14ch;
     font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
     font-size: 2rem;
     line-height: 0.98;
   }
 
   .link-slider__text {
     max-width: 36rem;
+    font-family: var(--font-paragraph--family);
+    font-style: var(--font-paragraph--style);
+    font-weight: var(--font-paragraph--weight);
     font-size: 1rem;
     line-height: 1.45;
     opacity: 0.86;
@@ -261,6 +272,9 @@
     margin-block-start: var(--margin-sm);
     padding-block-end: 0.18rem;
     border-block-end: 1px solid currentcolor;
+    font-family: var(--font-accent--family);
+    font-style: var(--font-accent--style);
+    font-weight: var(--font-accent--weight);
     font-size: var(--font-size--sm);
     line-height: 1.2;
     transition: opacity var(--animation-speed) var(--animation-easing);

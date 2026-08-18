@@ -175,8 +175,11 @@
     background:
       radial-gradient(circle at 97% 12%, rgb(248 249 252 / 0.9) 0 3.8rem, transparent 3.9rem),
       radial-gradient(circle at 8% 101%, rgb(248 249 252 / 0.84) 0 3.1rem, transparent 3.2rem),
-      radial-gradient(circle at 87% 91%, rgb(248 249 252 / 0.66) 0 4.4rem, transparent 4.5rem),
-      linear-gradient(130deg, #a8bfe1 0%, var(--hf-bg) 58%, #4a7fd9 100%);
+      radial-gradient(circle at 87% 91%, rgb(255 255 255 / 0.68) 0 4.4rem, transparent 4.5rem),
+      linear-gradient(130deg, #fffdf9 0%, var(--hf-bg) 58%, #ded6ca 100%);
+    font-family: var(--font-paragraph--family);
+    font-style: var(--font-paragraph--style);
+    font-weight: var(--font-paragraph--weight);
   }
 
   #HoverFunctionality-{{ section.id }} * {
@@ -212,7 +215,7 @@
     position: absolute;
     inset: 0;
     z-index: -2;
-    background: rgb(75 120 198 / 0.12);
+    background: rgb(92 117 107 / 0.08);
     pointer-events: none;
   }
 
@@ -224,7 +227,7 @@
     width: 18rem;
     height: 18rem;
     border-radius: 50%;
-    background: rgb(248 249 252 / 0.58);
+    background: rgb(255 253 249 / 0.58);
     pointer-events: none;
   }
 
@@ -236,10 +239,10 @@
     height: 17rem;
     opacity: 0.44;
     background:
-      linear-gradient(18deg, transparent 31%, rgb(42 69 111 / 0.82) 32% 33%, transparent 34%),
-      linear-gradient(10deg, transparent 42%, rgb(42 69 111 / 0.74) 43% 44%, transparent 45%),
-      linear-gradient(28deg, transparent 53%, rgb(42 69 111 / 0.66) 54% 55%, transparent 56%),
-      linear-gradient(40deg, transparent 61%, rgb(42 69 111 / 0.58) 62% 63%, transparent 64%);
+      linear-gradient(18deg, transparent 31%, rgb(92 117 107 / 0.45) 32% 33%, transparent 34%),
+      linear-gradient(10deg, transparent 42%, rgb(92 117 107 / 0.4) 43% 44%, transparent 45%),
+      linear-gradient(28deg, transparent 53%, rgb(92 117 107 / 0.36) 54% 55%, transparent 56%),
+      linear-gradient(40deg, transparent 61%, rgb(92 117 107 / 0.32) 62% 63%, transparent 64%);
     transform: rotate(-10deg);
   }
 
@@ -274,17 +277,21 @@
   #HoverFunctionality-{{ section.id }} .hover-functionality__heading {
     margin: 0 0 1rem;
     color: var(--hf-text);
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
     font-size: var(--hf-heading-size);
     line-height: 1.15;
-    font-weight: 800;
     letter-spacing: 0;
   }
 
   #HoverFunctionality-{{ section.id }} .hover-functionality__text {
     color: var(--hf-body);
+    font-family: var(--font-paragraph--family);
+    font-style: var(--font-paragraph--style);
+    font-weight: var(--font-paragraph--weight);
     font-size: var(--hf-text-size);
     line-height: 1.65;
-    font-weight: 700;
     letter-spacing: 0;
   }
 
@@ -318,7 +325,9 @@
     color: var(--hf-card-text);
     background: rgb(255 255 255 / 0.78);
     box-shadow: 0 0.25rem 0.9rem rgb(35 64 109 / 0.25);
-    font: inherit;
+    font-family: var(--font-paragraph--family);
+    font-style: var(--font-paragraph--style);
+    font-weight: var(--font-paragraph--weight);
     text-align: center;
     cursor: pointer;
     transform: translateY(0);
@@ -492,15 +501,17 @@
   }
 
   #HoverFunctionality-{{ section.id }} .hover-functionality__card-title {
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
     font-size: var(--hf-card-title-size);
     line-height: 1.25;
-    font-weight: 800;
   }
 
   #HoverFunctionality-{{ section.id }} .hover-functionality__card-description {
     font-size: var(--hf-card-text-size);
     line-height: 1.35;
-    font-weight: 700;
+    font-weight: var(--font-paragraph--weight);
     opacity: 0;
     transform: translateY(0.5rem);
   }
@@ -535,7 +546,7 @@
       background:
         radial-gradient(circle at 97% 9%, rgb(248 249 252 / 0.9) 0 2.8rem, transparent 2.9rem),
         radial-gradient(circle at 6% 98%, rgb(248 249 252 / 0.82) 0 2.2rem, transparent 2.3rem),
-        linear-gradient(145deg, #9db8df 0%, var(--hf-bg) 62%, #4d80d5 100%);
+        linear-gradient(145deg, #fffdf9 0%, var(--hf-bg) 62%, #ded6ca 100%);
     }
 
     #HoverFunctionality-{{ section.id }} .hover-functionality__background--desktop {

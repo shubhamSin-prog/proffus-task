@@ -426,6 +426,9 @@
     padding: var(--lb-padding-top) var(--lb-padding-inline) var(--lb-padding-bottom);
     color: var(--lb-text);
     background: var(--lb-bg);
+    font-family: var(--font-paragraph--family);
+    font-style: var(--font-paragraph--style);
+    font-weight: var(--font-paragraph--weight);
   }
 
   #LookupBanner-{{ section.id }} * {
@@ -455,24 +458,31 @@
   #LookupBanner-{{ section.id }} .lookup-banner__eyebrow,
   #LookupBanner-{{ section.id }} .lookup-banner__popup-eyebrow {
     color: var(--lb-accent);
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
     font-size: 0.75rem;
     line-height: 1.2;
-    font-weight: 800;
     text-transform: uppercase;
   }
 
   #LookupBanner-{{ section.id }} .lookup-banner__heading {
     margin: 0;
     color: var(--lb-text);
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
     font-size: var(--lb-heading-size);
     line-height: 1.05;
-    font-weight: 800;
     letter-spacing: 0;
     overflow-wrap: anywhere;
   }
 
   #LookupBanner-{{ section.id }} .lookup-banner__text {
     color: var(--lb-muted);
+    font-family: var(--font-paragraph--family);
+    font-style: var(--font-paragraph--style);
+    font-weight: var(--font-paragraph--weight);
     font-size: var(--lb-text-size);
     line-height: 1.65;
     letter-spacing: 0;
@@ -887,9 +897,11 @@
   #LookupBanner-{{ section.id }} .lookup-banner__popup-title {
     margin: 0.25rem 0 0;
     color: var(--lb-text);
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
     font-size: var(--lb-popup-title-size);
     line-height: 1.15;
-    font-weight: 800;
     letter-spacing: 0;
     overflow-wrap: anywhere;
   }
@@ -935,6 +947,9 @@
   #LookupBanner-{{ section.id }} .lookup-banner__description {
     margin-top: 0.85rem;
     color: var(--lb-muted);
+    font-family: var(--font-paragraph--family);
+    font-style: var(--font-paragraph--style);
+    font-weight: var(--font-paragraph--weight);
     font-size: var(--lb-popup-body-size);
     line-height: 1.65;
     letter-spacing: 0;
@@ -952,9 +967,11 @@
     border-radius: 0;
     color: var(--lb-button-text);
     background: var(--lb-button-bg);
+    font-family: var(--font-accent--family);
+    font-style: var(--font-accent--style);
+    font-weight: var(--font-accent--weight);
     font-size: 0.78rem;
     line-height: 1.2;
-    font-weight: 800;
     letter-spacing: 0;
     text-decoration: none;
     text-transform: uppercase;
@@ -1021,9 +1038,11 @@
     gap: 1rem;
     min-height: 2.45rem;
     color: var(--lb-text);
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
     font-size: 0.78rem;
     line-height: 1.25;
-    font-weight: 800;
     letter-spacing: 0;
     cursor: pointer;
     list-style: none;

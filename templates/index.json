@@ -120,10 +120,85 @@
         "image_radius": 0,
         "card_radius": 0
       }
+    },
+    "hover_functionality_V34UeT": {
+      "type": "hover-functionality",
+      "blocks": {
+        "feature_TdJAKR": {
+          "type": "feature",
+          "settings": {
+            "image_alt": "",
+            "title": "Effective Formulas",
+            "hover_text": "Purposeful blends that help your skin feel its best."
+          }
+        },
+        "feature_baTJUe": {
+          "type": "feature",
+          "settings": {
+            "image_alt": "",
+            "title": "Clean & Safe",
+            "hover_text": "Gentle ingredients selected with everyday skin in mind."
+          }
+        },
+        "feature_Lr47UU": {
+          "type": "feature",
+          "settings": {
+            "image_alt": "",
+            "title": "Sustainably Made",
+            "hover_text": "Considered choices from formula to finish."
+          }
+        },
+        "feature_gXMCr3": {
+          "type": "feature",
+          "settings": {
+            "image_alt": "",
+            "title": "Cruelty Free",
+            "hover_text": "Always tested on skin, never on animals."
+          }
+        }
+      },
+      "block_order": [
+        "feature_TdJAKR",
+        "feature_baTJUe",
+        "feature_Lr47UU",
+        "feature_gXMCr3"
+      ],
+      "name": "Hover functionality",
+      "settings": {
+        "heading": "Because your skin deserves better.",
+        "text": "<p>At Since A+, we believe skincare should be simple, effective, and kind. That's why our products are crafted with purpose, blending the power of nature and science to give you real results without the fuss.</p>",
+        "background_image_opacity": 80,
+        "max_width": 1060,
+        "content_width": 620,
+        "desktop_columns": "4",
+        "mobile_columns": "1",
+        "active_card_index": 4,
+        "background_color": "#76A6ED",
+        "text_color": "#FFFFFF",
+        "body_color": "#FFFFFF",
+        "card_text_color": "#161616",
+        "card_active_text_color": "#FFFFFF",
+        "padding_top": 24,
+        "padding_bottom": 44,
+        "padding_inline": 28,
+        "mobile_padding_inline": 16,
+        "card_gap": 16,
+        "card_radius": 6,
+        "heading_size": 16,
+        "heading_mobile_size": 18,
+        "text_size": 12,
+        "card_title_size": 13,
+        "card_text_size": 12,
+        "card_height": 220,
+        "card_mobile_height": 220,
+        "card_overlay_opacity": 70,
+        "card_active_overlay_opacity": 75
+      }
     }
   },
   "order": [
     "link_slider_NwzGyW",
-    "perfect_white_shirt_X8qByh"
+    "perfect_white_shirt_X8qByh",
+    "hover_functionality_V34UeT"
   ]
 }

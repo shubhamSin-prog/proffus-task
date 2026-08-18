@@ -8,6 +8,201 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "link_slider_NwzGyW": {
+      "type": "link-slider",
+      "blocks": {
+        "slide_k7Vf6y": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
+            "eyebrow": "New arrivals",
+            "heading": "Browse our latest products",
+            "text": "Fresh styles are ready to explore.",
+            "link_label": "",
+            "link": "shopify://collections/best-seller",
+            "open_in_new_tab": false
+          }
+        },
+        "slide_aLhqdU": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/rack-of-womens-clothing.jpg",
+            "eyebrow": "Featured",
+            "heading": "Explore curated picks",
+            "text": "Find the pieces customers are loving right now.",
+            "link_label": "",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "slide_k7Vf6y",
+        "slide_aLhqdU"
+      ],
+      "name": "Link slider",
+      "settings": {
+        "section_width": "full-width",
+        "slide_height": "medium",
+        "content_alignment": "flex-start",
+        "text_alignment": "left",
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "overlay_opacity": 40,
+        "background_color": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "perfect_white_shirt_X8qByh": {
+      "type": "perfect-white-shirt",
+      "blocks": {
+        "feature_UzPr6H": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/create-a-image-og-1500x1000-white-shirt-female-formal.png",
+            "image_alt": "",
+            "title": "Not see-through",
+            "text": "<p>We worked hard on choosing a fabric that's breathable but also completely opaque. No nude bras needed.</p>"
+          }
+        },
+        "feature_mXt8Nj": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/with-female-model.png",
+            "image_alt": "",
+            "title": "No gaping at the chest",
+            "text": "<p>No more using safety pins or fashion tape to prevent gaping at the chest. We've added hidden buttons to prevent gaping.</p>"
+          }
+        },
+        "feature_dEcGCe": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/generate-blue-female-model-shirt-1500-1000.png",
+            "image_alt": "",
+            "title": "Light & Breathable",
+            "text": "<p>Now you don't have to worry about wearing heavy shirts, our shirt offers a perfect blend of cotton and Lycra that keeps you comfortable.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "feature_UzPr6H",
+        "feature_mXt8Nj",
+        "feature_dEcGCe"
+      ],
+      "name": "Perfect white shirt",
+      "settings": {
+        "heading": "Why this is the perfect white shirt",
+        "max_width": 1400,
+        "desktop_columns": "3",
+        "mobile_columns": "1",
+        "background_color": "#eeeeee",
+        "card_background": "#f6f6f6",
+        "text_color": "#111111",
+        "body_color": "#333333",
+        "padding_top": 42,
+        "padding_bottom": 40,
+        "padding_inline": 32,
+        "mobile_padding_inline": 16,
+        "heading_bottom_spacing": 26,
+        "grid_gap": 8,
+        "card_padding": 20,
+        "content_gap": 18,
+        "heading_size": 34,
+        "heading_mobile_size": 28,
+        "title_size": 13,
+        "body_size": 12,
+        "image_width": 86,
+        "image_mobile_width": 86,
+        "image_height": 250,
+        "image_mobile_height": 300,
+        "image_radius": 0,
+        "card_radius": 0
+      }
+    },
+    "hover_functionality_V34UeT": {
+      "type": "hover-functionality",
+      "blocks": {
+        "feature_TdJAKR": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/generate-a-with-women.png",
+            "image_alt": "",
+            "title": "Effective Formulas",
+            "hover_text": "Purposeful blends that help your skin feel its best."
+          }
+        },
+        "feature_baTJUe": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/create-1000-1000-white-shirt-image-with-femal.png",
+            "image_alt": "",
+            "title": "Clean & Safe",
+            "hover_text": "Gentle ingredients selected with everyday skin in mind."
+          }
+        },
+        "feature_Lr47UU": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/generate-a-image-with-female-1500x1500.png",
+            "image_alt": "",
+            "title": "Sustainably Made",
+            "hover_text": "Considered choices from formula to finish."
+          }
+        },
+        "feature_gXMCr3": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/generate-a-women-1500-1500-model.png",
+            "image_alt": "",
+            "title": "Cruelty Free",
+            "hover_text": "Always tested on skin, never on animals."
+          }
+        }
+      },
+      "block_order": [
+        "feature_TdJAKR",
+        "feature_baTJUe",
+        "feature_Lr47UU",
+        "feature_gXMCr3"
+      ],
+      "name": "Hover functionality",
+      "settings": {
+        "heading": "Because your skin deserves better.",
+        "text": "<p>At Since A+, we believe skincare should be simple, effective, and kind. That's why our products are crafted with purpose, blending the power of nature and science to give you real results without the fuss.</p>",
+        "background_image_opacity": 100,
+        "max_width": 1400,
+        "content_width": 700,
+        "desktop_columns": "4",
+        "mobile_columns": "2",
+        "active_card_index": 4,
+        "background_color": "#76A6ED",
+        "text_color": "#FFFFFF",
+        "body_color": "#FFFFFF",
+        "card_text_color": "#161616",
+        "card_active_text_color": "#FFFFFF",
+        "padding_top": 72,
+        "padding_bottom": 50,
+        "padding_inline": 28,
+        "mobile_padding_inline": 16,
+        "card_gap": 16,
+        "card_radius": 6,
+        "heading_size": 16,
+        "heading_mobile_size": 18,
+        "text_size": 12,
+        "card_title_size": 13,
+        "card_text_size": 12,
+        "card_height": 220,
+        "card_mobile_height": 220,
+        "card_overlay_opacity": 70,
+        "card_active_overlay_opacity": 75
+      }
+    }
+  },
+  "order": [
+    "link_slider_NwzGyW",
+    "perfect_white_shirt_X8qByh",
+    "hover_functionality_V34UeT"
+  ]
 }

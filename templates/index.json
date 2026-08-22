@@ -41,6 +41,7 @@
         "slide_k7Vf6y",
         "slide_aLhqdU"
       ],
+      "disabled": true,
       "name": "Link slider",
       "settings": {
         "section_width": "full-width",
@@ -73,7 +74,7 @@
         "tab_fit": {
           "type": "tab",
           "settings": {
-            "tab_label": "Fit",
+            "tab_label": "Hallat",
             "image": "shopify://shop_images/with-female-model.png",
             "image_alt": "Product fit on model",
             "heading": "Better fit",
@@ -98,9 +99,9 @@
       ],
       "name": "Tab switch",
       "settings": {
-        "heading": "Simple tab switch",
+        "heading": "Simple Tab Switch",
         "max_width": 1100,
-        "background_color": "#ffffff",
+        "background_color": "{{ settings.color_palette.color2 }}",
         "text_color": "#111111",
         "border_color": "#dddddd",
         "active_tab_background": "#111111",
@@ -145,6 +146,7 @@
         "feature_mXt8Nj",
         "feature_dEcGCe"
       ],
+      "disabled": true,
       "name": "Perfect white shirt",
       "settings": {
         "heading": "Why this is the perfect white shirt",
@@ -221,6 +223,7 @@
         "feature_Lr47UU",
         "feature_gXMCr3"
       ],
+      "disabled": true,
       "name": "Hover functionality",
       "settings": {
         "heading": "Because your skin deserves better.",
@@ -277,6 +280,7 @@
         "detail_h8XQFY",
         "detail_nXBkyT"
       ],
+      "disabled": true,
       "name": "Lookup banner",
       "settings": {
         "eyebrow": "Featured ritual",

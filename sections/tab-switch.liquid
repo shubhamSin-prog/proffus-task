@@ -1,0 +1,430 @@
+<section
+  id="TabSwitch-{{ section.id }}"
+  class="tab-switch-section"
+  style="
+    --tab-switch-bg: {{ section.settings.background_color }};
+    --tab-switch-text: {{ section.settings.text_color }};
+    --tab-switch-border: {{ section.settings.border_color }};
+    --tab-switch-active-bg: {{ section.settings.active_tab_background }};
+    --tab-switch-active-text: {{ section.settings.active_tab_text_color }};
+    --tab-switch-max-width: {{ section.settings.max_width }}px;
+    --tab-switch-padding-top: {{ section.settings.padding_top }}px;
+    --tab-switch-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="tab-switch-section__inner">
+    {% if section.settings.heading != blank %}
+      <h2 class="tab-switch-section__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="tab-switch-section__grid">
+        <div class="tab-switch-section__tabs" role="tablist" aria-label="{{ section.settings.heading | default: 'Tabs' | escape }}">
+          {% for block in section.blocks %}
+            {% liquid
+              assign tab_label = block.settings.tab_label | default: block.settings.heading | default: 'Tab'
+              assign tab_index = forloop.index0
+            %}
+
+            <button
+              type="button"
+              id="TabSwitchTab-{{ section.id }}-{{ tab_index }}"
+              class="tab-switch-section__tab{% if forloop.first %} is-active{% endif %}"
+              role="tab"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-controls="TabSwitchPanel-{{ section.id }}-{{ tab_index }}"
+              data-tab-switch-button
+              data-tab-id="{{ tab_index }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ tab_label | escape }}
+            </button>
+          {% endfor %}
+        </div>
+
+        <div class="tab-switch-section__panels">
+          {% for block in section.blocks %}
+            {% liquid
+              assign tab_index = forloop.index0
+              assign image_alt = block.settings.image_alt | default: block.settings.heading | default: block.settings.tab_label | escape
+            %}
+
+            <div
+              id="TabSwitchPanel-{{ section.id }}-{{ tab_index }}"
+              class="tab-switch-section__panel{% if forloop.first %} is-active{% endif %}"
+              role="tabpanel"
+              aria-labelledby="TabSwitchTab-{{ section.id }}-{{ tab_index }}"
+              data-tab-switch-panel
+              data-tab-id="{{ tab_index }}"
+              {% unless forloop.first %}
+                hidden
+              {% endunless %}
+            >
+              <div class="tab-switch-section__media">
+                {% if block.settings.image != blank %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1000
+                    | image_tag:
+                      widths: '320, 480, 640, 800, 1000',
+                      sizes: '(min-width: 750px) 45vw, 100vw',
+                      loading: 'lazy',
+                      class: 'tab-switch-section__image',
+                      alt: image_alt
+                  }}
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'tab-switch-section__image tab-switch-section__placeholder' }}
+                {% endif %}
+              </div>
+
+              <div class="tab-switch-section__content">
+                {% if block.settings.heading != blank %}
+                  <h3 class="tab-switch-section__title">{{ block.settings.heading | escape }}</h3>
+                {% endif %}
+
+                {% if block.settings.text != blank %}
+                  <div class="tab-switch-section__text">{{ block.settings.text }}</div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <p class="tab-switch-section__empty">Add tab blocks to show content.</p>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #TabSwitch-{{ section.id }} {
+    padding: var(--tab-switch-padding-top) 20px var(--tab-switch-padding-bottom);
+    color: var(--tab-switch-text);
+    background: var(--tab-switch-bg);
+  }
+
+  #TabSwitch-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__inner {
+    width: min(100%, var(--tab-switch-max-width));
+    margin: 0 auto;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__heading {
+    margin: 0 0 24px;
+    color: inherit;
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__grid {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__tab {
+    width: 100%;
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid var(--tab-switch-border);
+    border-radius: 4px;
+    color: var(--tab-switch-text);
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__tab.is-active {
+    color: var(--tab-switch-active-text);
+    background: var(--tab-switch-active-bg);
+    border-color: var(--tab-switch-active-bg);
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__tab:focus-visible {
+    outline: 2px solid currentcolor;
+    outline-offset: 2px;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+    align-items: center;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__panel[hidden] {
+    display: none;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__media {
+    min-width: 0;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 1px solid var(--tab-switch-border);
+    border-radius: 4px;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__placeholder {
+    background: #f2f2f2;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__content {
+    min-width: 0;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__title {
+    margin: 0 0 10px;
+    color: inherit;
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__text {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__text p {
+    margin: 0;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__text p + p {
+    margin-top: 10px;
+  }
+
+  #TabSwitch-{{ section.id }} .tab-switch-section__empty {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    #TabSwitch-{{ section.id }} .tab-switch-section__heading {
+      font-size: 24px;
+    }
+
+    #TabSwitch-{{ section.id }} .tab-switch-section__grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    #TabSwitch-{{ section.id }} .tab-switch-section__tabs {
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    #TabSwitch-{{ section.id }} .tab-switch-section__tab {
+      flex: 0 0 auto;
+      width: auto;
+      min-width: 130px;
+      white-space: nowrap;
+    }
+
+    #TabSwitch-{{ section.id }} .tab-switch-section__panel {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById('TabSwitch-{{ section.id }}');
+
+    if (!section || section.dataset.tabSwitchReady === 'true') {
+      return;
+    }
+
+    section.dataset.tabSwitchReady = 'true';
+
+    const buttons = Array.from(section.querySelectorAll('[data-tab-switch-button]'));
+    const panels = Array.from(section.querySelectorAll('[data-tab-switch-panel]'));
+
+    const showTab = (tabId) => {
+      buttons.forEach((button) => {
+        const isActive = button.dataset.tabId === tabId;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      panels.forEach((panel) => {
+        const isActive = panel.dataset.tabId === tabId;
+        panel.classList.toggle('is-active', isActive);
+        panel.hidden = !isActive;
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => showTab(button.dataset.tabId));
+    });
+
+    document.addEventListener('shopify:block:select', (event) => {
+      if (!(event.target instanceof Element)) {
+        return;
+      }
+
+      const selectedButton = event.target.matches('[data-tab-switch-button]')
+        ? event.target
+        : event.target.querySelector('[data-tab-switch-button]');
+
+      if (selectedButton && section.contains(selectedButton)) {
+        showTab(selectedButton.dataset.tabId);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Tab switch",
+  "tag": "section",
+  "class": "tab-switch-wrapper section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tab switch section"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content width",
+      "min": 720,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 1100
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#dddddd"
+    },
+    {
+      "type": "color",
+      "id": "active_tab_background",
+      "label": "Active tab background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "active_tab_text_color",
+      "label": "Active tab text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Left tab label",
+          "default": "Tab title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Right side image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Right side heading",
+          "default": "Tab heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Right side text",
+          "default": "<p>Add text for this tab from the block settings.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Tab switch",
+      "category": "Text",
+      "blocks": {
+        "tab_1": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "First tab",
+            "heading": "First tab content",
+            "text": "<p>Add any image and text from this block.</p>"
+          }
+        },
+        "tab_2": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Second tab",
+            "heading": "Second tab content",
+            "text": "<p>Click the left tab to change this right side content.</p>"
+          }
+        }
+      },
+      "block_order": ["tab_1", "tab_2"]
+    }
+  ]
+}
+{% endschema %}

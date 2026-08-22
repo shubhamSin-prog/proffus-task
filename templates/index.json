@@ -57,6 +57,58 @@
         "padding-block-end": 0
       }
     },
+    "tab_switch_interview": {
+      "type": "tab-switch",
+      "blocks": {
+        "tab_quality": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Quality",
+            "image": "shopify://shop_images/create-a-image-og-1500x1000-white-shirt-female-formal.png",
+            "image_alt": "Quality fabric detail",
+            "heading": "Quality fabric",
+            "text": "<p>Yaha quality se related image aur text show hoga. Is block ko edit karke apna content add kar sakte ho.</p>"
+          }
+        },
+        "tab_fit": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Fit",
+            "image": "shopify://shop_images/with-female-model.png",
+            "image_alt": "Product fit on model",
+            "heading": "Better fit",
+            "text": "<p>Fit tab click karne par right side me fit related image aur text dikh jayega.</p>"
+          }
+        },
+        "tab_delivery": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Delivery",
+            "image": "shopify://shop_images/generate-blue-female-model-shirt-1500-1000.png",
+            "image_alt": "Delivery information",
+            "heading": "Fast delivery",
+            "text": "<p>Har tab ek Shopify block hai, isliye customizer se aur tabs add/remove kar sakte ho.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "tab_quality",
+        "tab_fit",
+        "tab_delivery"
+      ],
+      "name": "Tab switch",
+      "settings": {
+        "heading": "Simple tab switch",
+        "max_width": 1100,
+        "background_color": "#ffffff",
+        "text_color": "#111111",
+        "border_color": "#dddddd",
+        "active_tab_background": "#111111",
+        "active_tab_text_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
     "perfect_white_shirt_X8qByh": {
       "type": "perfect-white-shirt",
       "blocks": {
@@ -295,6 +347,7 @@
   },
   "order": [
     "link_slider_NwzGyW",
+    "tab_switch_interview",
     "perfect_white_shirt_X8qByh",
     "hover_functionality_V34UeT",
     "lookup_banner_Fy3gp7"

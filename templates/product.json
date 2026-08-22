@@ -35,7 +35,7 @@
           "type": "custom-liquid",
           "name": "t:names.custom_liquid",
           "settings": {
-            "custom_liquid": "{{- product.metafield.custom.badge.value -}}"
+            "custom_liquid": "{{- product.metafields.custom.badge.value -}}"
           },
           "blocks": {}
         },
